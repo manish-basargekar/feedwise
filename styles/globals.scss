@@ -1,0 +1,48 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+* {
+	margin: 0;
+    padding: 0;
+}
+html,
+body {
+	height: 100%;
+    /* if you want 1rem = 10px, easier for calculations */
+    /* font-size: 62.5%; */ 
+}
+body {
+	/* line-height: 1.5; */
+	-webkit-font-smoothing: antialiased;
+	font-family: sans-serif;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	outline: none;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+#root,
+#__next {
+	isolation: isolate;
+}

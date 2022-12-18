@@ -20,7 +20,7 @@ useEffect(() => {
       `https://www.reddit.com/api/v1/authorize?
 							client_id=${process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID}&response_type=code
 							&state=savedbySavedit
-							&redirect_uri=http://localhost:3000/login/callback
+							&redirect_uri=http://localhost:3000/callback
 							&duration=permanent&scope=save,history,identity`,
       "_self"
     )

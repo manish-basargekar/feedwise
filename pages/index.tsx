@@ -6,12 +6,18 @@ import Style from '../styles/Home.module.css'
 
 export default function Home() {
 
-useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      window.location.href = '/dashboard'
-    }
-},[])
+// useEffect(() => {
+//     fetch("/api/getUser",{
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     }).then((res) => {
+//       console.log(res)
+
+
+//     })
+// },[])
 
 
 

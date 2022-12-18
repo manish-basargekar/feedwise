@@ -21,7 +21,7 @@ useEffect(() => {
 							client_id=${process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID}&response_type=code
 							&state=savedbySavedit
 							&redirect_uri=http://localhost:3000/login/callback
-							&duration=permanent&scope=save,history`,
+							&duration=permanent&scope=save,history,identity`,
       "_self"
     )
   }

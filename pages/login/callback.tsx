@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 export default function Callback() {
 
 
-    const [token, setToken] = useState('' as string)
+
 
     useEffect(() => {
         // get the url params from the callback named code
@@ -29,10 +29,11 @@ export default function Callback() {
             .then(data => {
                 // save the token to local storage
                 // localStorage.setItem('token', data.token);
-                localStorage.setItem('token', data.token.access_token)
-                console.log(data.token.access_token)
-                // redirect to the home page
-                window.location.href = '/';
+                localStorage.setItem('token', data.access_token)
+                localStorage.setItem('name', data.name)
+                console.log(data.name)
+                // redirect to the dashboard
+                window.location.href = '/dashboard';
             }
             )
 
@@ -42,7 +43,7 @@ export default function Callback() {
 
     return (
         <div>
-            <h1>Callback</h1>
+            <h1>Loading...</h1>
         </div>
     )
 }

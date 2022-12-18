@@ -1,7 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
-    token: string
+    name: string,
+    access_token: string,
+    refresh_token: string,
+    expires_in: number,
+
 }
 
 export default async function handler(
@@ -9,7 +13,7 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     const code = req.body.code
-    console.log(code)
+    // console.log(code)
     const encodedHeader = Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString("base64")
 
     let response = await fetch(`https://www.reddit.com/api/v1/access_token`, {
@@ -27,8 +31,10 @@ export default async function handler(
     console.log("body", body)
 
     const Data = {
-        // name: user,
-        token: body
+        name: user.name,
+        access_token: body.access_token,
+        refresh_token: body.refresh_token,
+        expires_in: body.expires_in,
 
     }
 
@@ -36,14 +42,13 @@ export default async function handler(
 
     console.log(Data)
 
-  
+    // send Data in http only cookie to client
+    
+
 
 
     res.send(Data)
 
-
-
-    // await signInUser(user['id'],user['name'],body['access_token'],body['refresh_token'])
-    // let token = await signJWT(user['id'])
-    // res.send({token})
 }
+
+

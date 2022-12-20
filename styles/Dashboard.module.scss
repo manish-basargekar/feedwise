@@ -1,56 +1,31 @@
 .container {
     width: 100%;
-    nav {
+    
+
+    .options{
+        max-width: 900px;
+        margin: auto;
+        margin-top: 1rem;
         display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #eee;
-        padding: 0.2rem 1.5rem;
+        gap: 1rem;
+        // background-color: magenta;
 
-        .right {
-            display: flex;
-            gap: 0.2rem;
-        }
-
-        .userOptions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            // background-color: aqua;
-            background-color: #eee;
-            border-radius: 4px;
-            padding: 0.2rem 0.4rem;
-            gap: 0.3rem;
-            cursor: pointer;
-
-            svg {
-                width: 20px;
-            }
-        }
-
-        .menu {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: absolute;
-            right: 0;
-            padding: 2rem;
-
-            .user {
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        img {
-            width: 50px;
-            border-radius: 100%;
+        select{
+            padding: 0.5rem;
             border: 2px solid #eee;
-            padding: 0.1rem;
-            background-color: #eee;
-            height: 50px;
-            object-fit: cover;
+            border-radius: 4px;
+            // margin-bottom: 1rem;
+        }
+
+        input{
+            padding: 0.5rem;
+            border: 2px solid #eee;
+            border-radius: 4px;
+            // margin-bottom: 1rem;
+        }
+
+        button{
+            padding: 0.5rem;
         }
     }
 
@@ -63,7 +38,7 @@
         // flex-direction: column;
         flex-wrap: wrap;
         gap: 1rem;
-        margin-top: 2rem;
+        margin-top: 1rem;
         .post {
             border: 2px solid #eee;
             // background-color: rgb(242, 242, 242);

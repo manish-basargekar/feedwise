@@ -7,8 +7,9 @@ export default function Document() {
 			<Head />
 			<body>
 				<Main />
+
 				<link
-					href="https://api.fontshare.com/v2/css?f[]=supreme@2,1&display=swap"
+					href="https://api.fontshare.com/v2/css?f[]=switzer@600,700,400,401,500&display=swap"
 					rel="stylesheet"
 				/>
 				<NextScript />

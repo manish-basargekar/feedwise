@@ -23,7 +23,7 @@ export default async function handler(
 	}) as string;
 
 	// for next 25 posts
-	// const after = req.query.after as string;
+	const after = req.query.after as string;
 
 	// const data = await fetch(
 	// 	`https://oauth.reddit.com/user/${username}/saved?after=${after}`,
@@ -36,12 +36,22 @@ export default async function handler(
 	// );
 
 
-	const data = await fetch(`https://oauth.reddit.com/user/${username}/saved`, {
-		headers: {
-			Authorization: `Bearer ${access_token}`,
-			content_type: "application/json",
-		},
-	});
+
+
+
+	console.log(after)
+
+	const data = await fetch(
+		`https://oauth.reddit.com/user/${username}/saved?after=${after}&limit=100`,
+		{
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+				content_type: "application/json",
+			},
+		}
+	);
+
+
 
 	res.status(200).json(await data.json());
 }

@@ -28,7 +28,7 @@ export default async function handler(
 
 	const user = await getUser(access_token);
 
-	console.log(user);
+	// console.log(user);
 
 	if (!user) {
 		res.status(401).json({ message: "unauthorized" });

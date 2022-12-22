@@ -1,8 +1,59 @@
 .container {
     width: 100%;
-    
 
-    .options{
+    .center {
+        max-width: 900px;
+        // background-color: cyan;
+        margin: auto;
+    }
+
+    .shared {
+        margin-top: 1rem;
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgb(38, 38, 38);
+            padding-bottom: .5rem ;
+
+
+            .title{
+                text-transform: uppercase;
+                // font-size: 1.5rem;
+                // font-weight: 600;
+                letter-spacing: .04em;
+                color: #a2a1a1;
+            }
+        }
+
+        .items {
+            margin-top: .8rem;
+
+            button{
+                padding:.5rem
+            }
+
+            .sharedItem {
+                 background-color: #0f0f0f;
+                padding: 1rem;
+                border-radius: 6px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .noshares {
+           background-color: #0f0f0f;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+    }
+
+    .options {
         max-width: 900px;
         margin: auto;
         margin-top: 1rem;
@@ -10,22 +61,22 @@
         gap: 1rem;
         // background-color: magenta;
 
-        select{
+        select {
             padding: 0.5rem;
             border: 2px solid #eee;
             border-radius: 4px;
             // margin-bottom: 1rem;
         }
 
-        input{
+        input {
             padding: 0.5rem;
             border: 2px solid #eee;
             border-radius: 4px;
             // margin-bottom: 1rem;
         }
 
-        button{
-            padding: 0.5rem;
+        button {
+            // padding: 0.5rem;
         }
     }
 
@@ -39,12 +90,41 @@
         flex-wrap: wrap;
         gap: 1rem;
         margin-top: 1rem;
+        .head{
+            width: 100%;
+            border-bottom: 1px solid rgb(38, 38, 38);
+            padding-bottom: .5rem ;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+
+            .title{
+                text-transform: uppercase;
+                // font-size: 1.5rem;
+                // font-weight: 600;
+                letter-spacing: .04em;
+                 color: #a2a1a1;
+            }
+        }
+
+        .postsContainer{
+            // display: flex;
+            // flex-wrap: wrap;
+            // gap: 1rem;
+            // background-color: aqua;
+        }
+
+
         .post {
-            border: 2px solid #eee;
-            // background-color: rgb(242, 242, 242);
+            // border: 1px solid rgb(44, 44, 44);
+            background-color: #0f0f0f;
+            // background-color: #040404;
+            margin-bottom: 1rem;
             padding: 1rem;
-            width: 48%;
-            border-radius: 6px;
+            width: 100%;
+            border-radius: 12px;
+            height: max-content;
         }
     }
 }

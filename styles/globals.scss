@@ -16,6 +16,8 @@ body {
 body {
 	/* line-height: 1.5; */
 	-webkit-font-smoothing: antialiased;
+	background-color: #1a1a1a;
+	color: rgb(255, 255, 255);
 	font-family: "Switzer", sans-serif;
 }
 img,
@@ -45,4 +47,27 @@ h6 {
 #root,
 #__next {
 	isolation: isolate;
+}
+
+button {
+	padding: 0.5rem 1rem;
+	background-color: #383838;
+	color: #eee;
+	border: none;
+	border-radius: 4px;
+}
+
+
+
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -1rem; /* gutter size offset */
+//   width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 1rem; /* gutter size */
+  background-clip: padding-box;
 }

@@ -39,7 +39,7 @@ export default function Navbar() {
 						/>
 					</svg>
 
-					<h3>Log out</h3>
+					<span>Log out</span>
 				</button>
 			</div>
 			{/* <div className={Style.menu}>

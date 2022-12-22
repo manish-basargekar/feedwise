@@ -3,8 +3,9 @@
         width: 100%;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 2px solid #eee;
-        padding: 0.2rem 1.5rem;
+        border-bottom: 1px solid rgb(38, 38, 38);
+        padding: 0.5rem 1.5rem;
+       background-color: #0f0f0f;
 
         .right {
             display: flex;
@@ -16,11 +17,13 @@
             align-items: center;
             justify-content: space-between;
             // background-color: aqua;
-            background-color: #eee;
+            background-color: #383838;
+            color: #eee;
             border-radius: 4px;
-            padding: 0.2rem 0.4rem;
+            // padding: 0.3rem 0.7rem;
             gap: 0.3rem;
             cursor: pointer;
+            border: none;
 
             svg {
                 width: 20px;

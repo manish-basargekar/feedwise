@@ -1,14 +1,46 @@
 .container {
     width: 100%;
 
+
+    .infoTop{
+        display: flex;
+        // justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1rem;
+        .subs{
+            flex: 2;
+            // background-color: magenta;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .3rem;
+            .tag{
+                font-size: .9rem;
+                padding: .4rem .7rem;
+                border-radius: 4px;
+                background-color: #0f0f0f;
+                color: #a2a1a1;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: #df3;
+                    color: #0f0f0f;
+                }
+            }
+        }
+
+        .shared{
+            flex: 1;
+        }
+    }
+
     .center {
-        max-width: 900px;
+        max-width: 1200px;
         // background-color: cyan;
         margin: auto;
     }
 
     .shared {
-        margin-top: 1rem;
+        
         .head {
             display: flex;
             justify-content: space-between;
@@ -35,11 +67,15 @@
 
             .sharedItem {
                  background-color: #0f0f0f;
-                padding: 1rem;
+                padding: .5rem;
                 border-radius: 6px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
+                .link{
+                    font-family: monospace;
+                }
             }
         }
 
@@ -81,7 +117,7 @@
     }
 
     .content {
-        max-width: 900px;
+        width: 100%;
         // background-color: magenta;
         min-height: 100vh;
         margin: auto;
@@ -119,11 +155,11 @@
         .post {
             // border: 1px solid rgb(44, 44, 44);
             background-color: #0f0f0f;
-            // background-color: #040404;
+
             margin-bottom: 1rem;
             padding: 1rem;
             width: 100%;
-            border-radius: 12px;
+            border-radius: 4px;
             height: max-content;
         }
     }

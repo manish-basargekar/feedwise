@@ -167,12 +167,31 @@ export default function Callback() {
 		});
 	};
 
+	// make an array of all subreddits along with the number of posts saved from each subreddit
+
+	const getSubreddits = () => {
+		const subreddits = saved.map((post: any) => {
+			return post.data.subreddit;
+		});
+
+		const uniqueSubreddits = [...new Set(subreddits)];
+
+		const subredditsWithCount = uniqueSubreddits.map((subreddit: any) => {
+			return {
+				subreddit,
+				count: subreddits.filter((sub: any) => sub === subreddit).length,
+			};
+		});
+
+		return subredditsWithCount;
+	};
+
 	return (
 		<>
 			<div></div>
 			{user ? (
 				<div className={Style.container}>
-					<Navbar />
+					<Navbar user={user} handleShare={handleShare} />
 
 					<Modal
 						isOpen={modalIsOpen}
@@ -234,58 +253,60 @@ export default function Callback() {
 					</Modal>
 
 					<div className={Style.center}>
-						<div className={Style.shared}>
-							<div className={Style.head}>
-								<span className={Style.title}>
-									Recently Shared ({dbSaved.length}){" "}
-								</span>
-							</div>
+						<div className={Style.infoTop}>
+							<div className={Style.shared}>
+								<div className={Style.head}>
+									<span className={Style.title}>Recently Shared</span>
+								</div>
 
-							{dbSaved.length > 0 ? (
-								<div className={Style.items}>
-									{dbSaved.map((post: any) => (
-										<div className={Style.sharedItem}>
-											<div className={Style.link}>
-												http://www.localhost:3000/shared/{post.id}
+								{dbSaved.length > 0 ? (
+									<div className={Style.items}>
+										{dbSaved.map((post: any) => (
+											<div className={Style.sharedItem}>
+												<div className={Style.link}>
+													localhost:3000/shared/{post.id}
+												</div>
+												<button>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="20"
+														height="20"
+														viewBox="0 0 24 24"
+														fill="none"
+														stroke="currentColor"
+														strokeWidth="2"
+														strokeLinecap="round"
+														strokeLinejoin="round"
+													>
+														<path d="M15.5 4H18a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5" />
+														<path d="M8.621 3.515A2 2 0 0 1 10.561 2h2.877a2 2 0 0 1 1.94 1.515L16 6H8l.621-2.485z" />
+														<path d="M9 12h6" />
+														<path d="M9 16h6" />
+													</svg>
+												</button>
 											</div>
-											<button>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="20"
-													height="20"
-													viewBox="0 0 24 24"
-													fill="none"
-													stroke="currentColor"
-													strokeWidth="2"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-											
-												>
-													<path d="M15.5 4H18a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5" />
-													<path d="M8.621 3.515A2 2 0 0 1 10.561 2h2.877a2 2 0 0 1 1.94 1.515L16 6H8l.621-2.485z" />
-													<path d="M9 12h6" />
-													<path d="M9 16h6" />
-												</svg>
-											</button>
+										))}
+									</div>
+								) : (
+									<div className={Style.noshares}>
+										You dont Have Any shares, create a new share by clicking
+										this button
+									</div>
+								)}
+							</div>
+							<div className={Style.subs}>
+								{getSubreddits().map((sub: any) => {
+									return (
+										<div key={sub.subreddit} className={Style.tag}>
+											r/{sub.subreddit} {sub.count}
 										</div>
-									))}
-								</div>
-							) : (
-								<div className={Style.noshares}>
-									You dont Have Any shares, create a new share by clicking this
-									button
-								</div>
-							)}
+									);
+								})}
+							</div>
 						</div>
 						<div className={Style.content}>
-							{/* {saved ? (
-							
-						) : (
-							<div>loading</div>
-						)} */}
 							<div className={Style.head}>
 								<span className={Style.title}>All saves</span>
-								<button onClick={handleShare}>Share</button>
 							</div>
 
 							{loading ? (
@@ -295,18 +316,17 @@ export default function Callback() {
 									<Masonry
 										breakpointCols={
 											{
-												default: 2,
+												default: 3,
 												1100: 2,
 												700: 1,
 											} as any
 										}
-										className={Style["my-masonry-grid"]}
+										className="my-masonry-grid"
 										columnClassName="my-masonry-grid_column"
 									>
 										{saved.map((post: any) => {
 											return (
 												<div className={Style.post} key={post.data.id}>
-													{post.data.id}
 													<div className={Style.postHeader}>
 														<img
 															src={

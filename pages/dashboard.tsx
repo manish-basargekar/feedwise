@@ -13,7 +13,8 @@ import { collection } from "firebase/firestore";
 
 import { db } from "../firebase";
 import { nanoid } from "nanoid";
-import Masonry from "react-masonry-css";
+
+import AllPosts from "../components/AllPosts/AllPosts";
 
 type user = {
 	name: string;
@@ -186,9 +187,17 @@ export default function Callback() {
 		return subredditsWithCount;
 	};
 
+
+	const getNsfwPosts = () => {
+		const nsfwPosts = saved.filter((post: any) => {
+			return post.data.over_18;
+		});
+
+		return nsfwPosts;
+	}
+
 	return (
 		<>
-			<div></div>
 			{user ? (
 				<div className={Style.container}>
 					<Navbar user={user} handleShare={handleShare} />
@@ -204,67 +213,35 @@ export default function Callback() {
 								backgroundColor: "rgb(24, 24, 24)",
 								color: "#e0e0e0",
 								border: "none",
-								width: "50%",
+								width: "40rem",
 								margin: "auto",
 								borderRadius: "15px",
+								padding: "0",
+								animation: "slideIn 0.5s ease-in-out",
 							},
 						}}
 					>
-						<h1>Share nsfw</h1>
-
-						{hasSaves && (
-							<div
-								style={{
-									backgroundColor: "#FFF6BD",
-									padding: "20px",
-								}}
-							>
-								<h1>You have saves</h1>
-								{/* {dbSaved.nsfw.map((post: any) => {
-									return <div key={post.data.id}>{post.data.title}</div>;
-								})} */}
-								{dbSaved.map((post: any) => {
-									return (
-										<div key={post.id}>
-											{post.id}
-											{post.nsfw.map((post: any) => {
-												return <div key={post.data.id}>{post.data.title}</div>;
-											})}
-										</div>
-									);
-								})}
+						<div className={Style.modalContent}>
+							<div className={Style.header}>
+								<h2>Share</h2>
+								<div></div>
+								<button onClick={closeModal} className={Style.closeBtn}>
+									Close
+								</button>
 							</div>
-						)}
+							<div className={Style.infoTop}>
+								<div className={Style.shared}>
+									<div className={Style.head}>
+										<span className={Style.title}>Recently Shared</span>
+										<span>Show All</span>
+									</div>
 
-						<div>
-							{nsfw.map((post: any) => {
-								return <div key={post.data.id}>{post.data.title}</div>;
-							})}
-						</div>
-
-						<p>Share this link with your friends</p>
-						<input
-							type="text"
-							value={`http://localhost:3000/saved/${id}`}
-							readOnly
-						/>
-
-						<button onClick={closeModal}>Close</button>
-					</Modal>
-
-					<div className={Style.center}>
-						<div className={Style.infoTop}>
-							<div className={Style.shared}>
-								<div className={Style.head}>
-									<span className={Style.title}>Recently Shared</span>
-								</div>
-
-								{dbSaved.length > 0 ? (
-									<div className={Style.items}>
-										{dbSaved.map((post: any) => (
+									{dbSaved.length > 0 ? (
+										<div className={Style.items}>
+											{/* {dbSaved.map((post: any) => ( */}
 											<div className={Style.sharedItem}>
 												<div className={Style.link}>
-													localhost:3000/shared/{post.id}
+													www.localhost:3000/shared/{dbSaved[0].id}
 												</div>
 												<button>
 													<svg
@@ -285,91 +262,68 @@ export default function Callback() {
 													</svg>
 												</button>
 											</div>
-										))}
-									</div>
-								) : (
-									<div className={Style.noshares}>
-										You dont Have Any shares, create a new share by clicking
-										this button
-									</div>
-								)}
-							</div>
-							<div className={Style.subs}>
-								{getSubreddits().map((sub: any) => {
-									return (
-										<div key={sub.subreddit} className={Style.tag}>
-											r/{sub.subreddit} {sub.count}
+											{/* ))} */}
 										</div>
-									);
-								})}
+									) : (
+										<div className={Style.noshares}>
+											You dont Have Any shares, create a new share by using
+											generate button
+										</div>
+									)}
+								</div>
+								<div className={Style.head}>
+									<span className={Style.title}>New Share</span>
+								</div>
+								<div className={Style.subs}>
+									<div className={Style.tag}>ALL</div>
+									<div className={Style.tag}>NSFW</div>
+									{getSubreddits().map((sub: any) => {
+										return (
+											<div key={sub.subreddit} className={Style.tag}>
+												r/{sub.subreddit} {sub.count}
+											</div>
+										);
+									})}
+								</div>
+								<div className={Style.preview}>
+									<div className={Style.currentLink}>
+										<div className={Style.link}></div>
+										<button>Generate Link</button>
+									</div>
+									<div className={Style.previewHover}>
+										<div className={Style.previewTag}>PREVIEW</div>
+									</div>
+									<div className={Style.previewContent}>
+										{/* <svg>
+											<line x1="0" y1="100%" x2="100%" y2="0" />
+											<line x1="0" y1="0" x2="100%" y2="100%" />
+										</svg> */}
+										{/* <button>PREVIEW</button> */}
+										<AllPosts saved={saved} loading={loading} columns={2} />
+									</div>
+								</div>
 							</div>
+						</div>
+					</Modal>
+
+					<div className={Style.center}>
+						<div className={Style.subs}>
+							<div className={Style.tag}>All {saved.length}</div>
+							<div className={Style.tag}>NSFW {getNsfwPosts().length} </div>
+							{getSubreddits().map((sub: any) => {
+								return (
+									<div key={sub.subreddit} className={Style.tag}>
+										r/{sub.subreddit} {sub.count}
+									</div>
+								);
+							})}
 						</div>
 						<div className={Style.content}>
 							<div className={Style.head}>
 								<span className={Style.title}>All saves</span>
 							</div>
 
-							{loading ? (
-								<div>loading</div>
-							) : (
-								<div className={Style.postsContainer}>
-									<Masonry
-										breakpointCols={
-											{
-												default: 3,
-												1100: 2,
-												700: 1,
-											} as any
-										}
-										className="my-masonry-grid"
-										columnClassName="my-masonry-grid_column"
-									>
-										{saved.map((post: any) => {
-											return (
-												<div className={Style.post} key={post.data.id}>
-													<div className={Style.postHeader}>
-														<img
-															src={
-																post.data.url
-																	? post.data.url
-																	: post.data.thumbnail
-															}
-														/>
-
-														<div className={Style.postInfo}>
-															<span>
-																{post.data.title
-																	? post.data.title
-																	: post.data.link_title}
-															</span>
-															<span
-																style={{
-																	color: "gray",
-																}}
-															>
-																Posted by /u/{post.data.author}
-															</span>
-															<br />
-															<span>r/{post.data.subreddit}</span>
-															<a
-																href={`http://www.reddit.com${post.data.permalink}`}
-																target="_blank"
-																rel="noopener noreferrer"
-															>
-																Link
-															</a>
-														</div>
-													</div>
-													<div className={Style.postBody}>
-														<p>{post.data.selftext}</p>
-														<p>{post.data.body}</p>
-													</div>
-												</div>
-											);
-										})}
-									</Masonry>
-								</div>
-							)}
+							<AllPosts saved={saved} loading={loading} />
 						</div>
 					</div>
 				</div>

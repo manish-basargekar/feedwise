@@ -1,5 +1,6 @@
 import Style from "./AllPosts.module.scss";
 import Masonry from "react-masonry-css";
+import Image from "next/image";
 
 type AllPostsProps = {
     saved: any;
@@ -24,7 +25,7 @@ export default function AllPosts(props: AllPostsProps) {
 								700: 1,
 							} as any
 						}
-						className={Style["my-masonry-grid"]}
+						className="my-masonry-grid"
 						columnClassName="my-masonry-grid_column"
 					>
 						{saved.map((post: any) => {
@@ -33,6 +34,9 @@ export default function AllPosts(props: AllPostsProps) {
 									<div className={Style.postHeader}>
 										<img
 											src={post.data.url ? post.data.url : post.data.thumbnail}
+											alt="post image"
+											// width={100}
+											// height={100}
 										/>
 
 										<div className={Style.postInfo}>

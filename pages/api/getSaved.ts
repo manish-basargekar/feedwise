@@ -42,7 +42,7 @@ export default async function handler(
 	console.log(after)
 
 	const data = await fetch(
-		`https://oauth.reddit.com/user/${username}/saved?after=${after}&limit=25`,
+		`https://oauth.reddit.com/user/${username}/saved?after=${after}&limit=100`,
 		{
 			headers: {
 				Authorization: `Bearer ${access_token}`,

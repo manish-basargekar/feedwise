@@ -8,7 +8,7 @@ import Navbar from "../components/Navbar/Navbar";
 
 import Modal from "react-modal";
 
-import { doc, setDoc, Timestamp, getDocs } from "firebase/firestore";
+import { doc, setDoc, Timestamp, getDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 
 import { db } from "../firebase";
@@ -33,13 +33,10 @@ export default function Callback() {
 
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 
-	const [nsfw, setNsfw] = useState([] as any);
-
-	const [id, setId] = useState("" as string);
-
-	const [hasSaves, setHasSaves] = useState(false);
-
 	const [dbSaved, setDbSaved] = useState([] as any);
+
+	const [filter, setFilter] = useState("all");
+
 
 	function openModal() {
 		setModalIsOpen(true);
@@ -68,13 +65,35 @@ export default function Callback() {
 	}, []);
 
 	useEffect(() => {
-		if (!user) return;
+		if (!user.name) return;
 		checkUserSaves();
 	}, [user]);
 
 	useEffect(() => {
 		console.log("savedd", saved);
 	}, [saved]);
+
+	useEffect(() => {
+		console.log("filter", filter);
+
+		// if (filter === "all") {
+		// 	setFilterList(saved);
+		// 	return;
+		// }
+
+		// if (filter === "nsfw") {
+		// 	setFilterList(saved.filter((post: any) => post.data.over_18 === true));
+		// 	return;
+		// }
+
+		
+	}, [filter]);
+
+
+	const getSubPosts = (sub: string) => {
+		return saved.filter((post: any) => post.data.subreddit === sub);
+	};
+
 
 	async function getSavedFromReddit(after: string) {
 		await fetch(`api/getSaved?after=${after}`, {
@@ -91,12 +110,13 @@ export default function Callback() {
 				setSaved((prev: any) => [...prev, ...data.data.children]);
 
 				// if (data.data.after == null) {
-				setLoading(false);
+					setLoading(false);
 				// }
 
 				// if (data.data.after) {
 				// 	console.log(data.data.after);
 				// 	getSavedFromReddit(data.data.after);
+
 				// }
 			})
 			.catch((err) => {
@@ -110,62 +130,56 @@ export default function Callback() {
 	const handleShare = () => {
 		openModal();
 
-		const nsfw = saved.filter((post: any) => {
-			return post.data.over_18;
-		});
-
-		console.log(nsfw);
-		setNsfw(nsfw);
+		// setNsfw(nsfw);
 
 		const newId = nanoid();
-		setId(newId);
+		// setId(newId);
 
 		// Check if user has already saved posts
 
-		if (dbSaved.length === 0) {
-			console.log("saving to firebase");
-			saveToFirebase(nsfw, newId);
+		console.log("saving to firebase");
+		if (!loading && !dbSaved) {
+			saveToFirebase(newId);
+			console.log(saved);
 		}
 	};
 
 	async function checkUserSaves() {
 		// const docRef = doc(db, "saved-nsfw", user.name);
 		// const docSnap = await getDoc(docRef);
+
 		console.log("checking user saves", user.name);
 
-		const collectionRef = collection(
-			db,
-			"saved-nsfw",
-			`${user.name}`,
-			"shared"
-		);
+		// check if user document in saved/username exists
 
-		const querySnapshot = await getDocs(collectionRef);
+		const docRef = doc(db, "saved", user.name);
 
-		const dbDocs = [] as any;
+		const docSnap = await getDoc(docRef);
 
-		querySnapshot.forEach((doc) => {
-			dbDocs.push(doc.data());
-		});
-
-		setDbSaved(dbDocs);
+		if (docSnap.exists()) {
+			console.log("Document data:", docSnap.data());
+			setDbSaved(docSnap.data());
+		}
 	}
 
-	const saveToFirebase = async (nsfwPosts: any, newId: string) => {
+	const saveToFirebase = async (newId: string) => {
 		// const collectionRef = collection(db, "saved-nsfw", `${user.name}`, id);
-		await setDoc(doc(db, `saved-nsfw`, `${user.name}`, "shared", newId), {
-			nsfw: nsfwPosts,
-			savedBy: user.name,
-			createdAt: Timestamp.now(),
-			tags: [],
+		saved.forEach(async (post: any) => {
+			const docRef = doc(db, "saved", user.name, newId, post.data.id);
+			await setDoc(docRef, {
+				...post.data,
+				created_at: Timestamp.fromDate(new Date()),
+			});
+
+			console.log("Document written with ID: ", docRef.id);
+		});
+
+		await setDoc(doc(db, "saved", user.name), {
+			created_at: Timestamp.fromDate(new Date()),
 			id: newId,
 		});
 
-		await setDoc(doc(db, `saved-nsfw`, `${user.name}`), {
-			savedBy: user.name,
-			createdAt: Timestamp.now(),
-			tags: [],
-		});
+		//
 	};
 
 	// make an array of all subreddits along with the number of posts saved from each subreddit
@@ -184,9 +198,14 @@ export default function Callback() {
 			};
 		});
 
+		// sort by count
+
+		subredditsWithCount.sort((a: any, b: any) => {
+			return b.count - a.count;
+		});
+
 		return subredditsWithCount;
 	};
-
 
 	const getNsfwPosts = () => {
 		const nsfwPosts = saved.filter((post: any) => {
@@ -194,7 +213,13 @@ export default function Callback() {
 		});
 
 		return nsfwPosts;
-	}
+	};
+
+	const handleSavedRefresh = () => {
+		setLoading(true);
+		const newId = nanoid();
+		saveToFirebase(newId);
+	};
 
 	return (
 		<>
@@ -230,7 +255,7 @@ export default function Callback() {
 								</button>
 							</div>
 							<div className={Style.infoTop}>
-								<div className={Style.shared}>
+								{/* <div className={Style.shared}>
 									<div className={Style.head}>
 										<span className={Style.title}>Recently Shared</span>
 										<span>Show All</span>
@@ -238,7 +263,7 @@ export default function Callback() {
 
 									{dbSaved.length > 0 ? (
 										<div className={Style.items}>
-											{/* {dbSaved.map((post: any) => ( */}
+											
 											<div className={Style.sharedItem}>
 												<div className={Style.link}>
 													www.localhost:3000/shared/{dbSaved[0].id}
@@ -262,7 +287,7 @@ export default function Callback() {
 													</svg>
 												</button>
 											</div>
-											{/* ))} */}
+										
 										</div>
 									) : (
 										<div className={Style.noshares}>
@@ -270,9 +295,10 @@ export default function Callback() {
 											generate button
 										</div>
 									)}
-								</div>
+								</div> */}
 								<div className={Style.head}>
 									<span className={Style.title}>New Share</span>
+									<button onClick={handleSavedRefresh}>refresh</button>
 								</div>
 								<div className={Style.subs}>
 									<div className={Style.tag}>ALL</div>
@@ -287,8 +313,10 @@ export default function Callback() {
 								</div>
 								<div className={Style.preview}>
 									<div className={Style.currentLink}>
-										<div className={Style.link}></div>
-										<button>Generate Link</button>
+										<div className={Style.link}>
+											{`www.localhost:3000/shared/${dbSaved ? dbSaved.id : ""}`}
+										</div>
+										<button>Copy Link</button>
 									</div>
 									<div className={Style.previewHover}>
 										<div className={Style.previewTag}>PREVIEW</div>
@@ -306,26 +334,67 @@ export default function Callback() {
 						</div>
 					</Modal>
 
-					<div className={Style.center}>
-						<div className={Style.subs}>
-							<div className={Style.tag}>All {saved.length}</div>
-							<div className={Style.tag}>NSFW {getNsfwPosts().length} </div>
-							{getSubreddits().map((sub: any) => {
-								return (
-									<div key={sub.subreddit} className={Style.tag}>
-										r/{sub.subreddit} {sub.count}
-									</div>
-								);
-							})}
+					<main className={Style.dash}>
+						{/* <div className={Style.options}>
+							<div className={Style.share}></div>
+							<div className={Style.filterBySub}></div>
 						</div>
-						<div className={Style.content}>
-							<div className={Style.head}>
-								<span className={Style.title}>All saves</span>
-							</div>
+						<div></div> */}
 
-							<AllPosts saved={saved} loading={loading} />
+						<div className={Style.center}>
+							<div className={Style.subs}>
+								<div
+									className={Style.tag}
+									style={{
+										backgroundColor: filter === "all" ? "#bf3" : "",
+										color: filter === "all" ? "#000000" : "",
+									}}
+									onClick={() => setFilter("all")}
+								>
+									All {saved.length}
+								</div>
+								<div
+									className={Style.tag}
+									style={{
+										backgroundColor: filter === "nsfw" ? "#bf3" : "",
+										color: filter === "nsfw" ? "#000000" : "",
+									}}
+									onClick={() => setFilter("nsfw")}
+								>
+									NSFW {getNsfwPosts().length}{" "}
+								</div>
+								{getSubreddits().map((sub: any) => {
+									return (
+										<div
+											key={sub.subreddit}
+											className={Style.tag}
+											style={{
+												backgroundColor: filter === sub.subreddit ? "#bf3" : "",
+												color: filter === sub.subreddit ? "#000000" : "",
+											}}
+											onClick={() => setFilter(sub.subreddit)}
+										>
+											r/{sub.subreddit} {sub.count}
+										</div>
+									);
+								})}
+							</div>
+							<div className={Style.content}>
+								<div className={Style.head}>
+									<span className={Style.title}>All saves</span>
+								</div>
+
+								<AllPosts saved={
+									filter === "all"
+										? saved
+										: filter === "nsfw"
+										? getNsfwPosts()
+										: getSubPosts(filter)
+
+								} loading={loading} />
+							</div>
 						</div>
-					</div>
+					</main>
 				</div>
 			) : (
 				<div>loading</div>

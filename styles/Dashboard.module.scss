@@ -1,10 +1,33 @@
 .container {
     width: 100%;
 
+
+    // .dash{
+    //     display: flex;
+    //     background-color: rgb(36, 44, 1);
+    //     // max-width: 1200px;
+    //     margin: auto;
+    //     justify-content: space-between;
+    //     padding: 0 2rem;
+
+    //     .options{
+    //         // flex: 1;
+    //         // width: 100rem;
+    //         width: 25rem;
+    //         min-height: 100vh;
+    //         background-color: #df3;
+    //         position: fixed;
+    //         left: 0;
+    //     }
+    // }
+
+
     .center {
         max-width: 1200px;
         // background-color: cyan;
         margin: auto;
+        // flex: 2;
+        //  padding:0 1rem;
     }
 
     .options {
@@ -70,6 +93,8 @@
     flex-wrap: wrap;
     gap: 0.3rem;
     margin-top: 1rem;
+    max-height: 10rem;
+    overflow: scroll;
 
     .tag {
         font-size: 0.9rem;
@@ -98,7 +123,7 @@
 
     .previewHover {
         position: absolute;
-        bottom: 20%;
+        bottom: 26%;
         left: 42%;
         width: max-content;
         height: max-content;
@@ -126,7 +151,7 @@
     .previewContent {
         margin-top: 1rem;
         opacity: 0.5;
-        height: 23rem;
+        height: 27rem;
         overflow-y: scroll;
         border: 1px solid rgb(38, 38, 38);
         // filter: blur(2px);
@@ -182,6 +207,7 @@
         .head {
             display: flex;
             justify-content: space-between;
+            // background-color: #df3;
             align-items: center;
             border-bottom: 1px solid rgb(38, 38, 38);
             padding-bottom: 0.5rem;

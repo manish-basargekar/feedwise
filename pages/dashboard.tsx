@@ -11,7 +11,7 @@ import Modal from "react-modal";
 import { doc, setDoc, Timestamp, getDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 
-import { db } from "../firebase";
+import { db } from "../Firebase.js";
 import { nanoid } from "nanoid";
 
 import AllPosts from "../components/AllPosts/AllPosts";

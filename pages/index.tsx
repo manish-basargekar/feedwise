@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Style from "../styles/Home.module.css";
+import Style from "../styles/Home.module.scss";
 
 export default function Home() {
 	// useEffect(() => {
@@ -26,9 +26,9 @@ export default function Home() {
 	}
 
 	return (
-		<>
-			<h1>Savedit</h1>
+		<div className={Style.container}>
+			<h1>Feedwise</h1>
 			<button onClick={openLogin}>login with Reddit</button>
-		</>
+		</div>
 	);
 }

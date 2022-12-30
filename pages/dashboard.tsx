@@ -234,6 +234,7 @@ export default function Callback() {
 								color: "#e0e0e0",
 								border: "none",
 								width: "40rem",
+								height: "20rem",
 								margin: "auto",
 								borderRadius: "15px",
 								padding: "0",
@@ -250,62 +251,11 @@ export default function Callback() {
 								</button>
 							</div>
 							<div className={Style.infoTop}>
-								{/* <div className={Style.shared}>
-									<div className={Style.head}>
-										<span className={Style.title}>Recently Shared</span>
-										<span>Show All</span>
-									</div>
-
-									{dbSaved.length > 0 ? (
-										<div className={Style.items}>
-											
-											<div className={Style.sharedItem}>
-												<div className={Style.link}>
-													www.localhost:3000/shared/{dbSaved[0].id}
-												</div>
-												<button>
-													<svg
-														xmlns="http://www.w3.org/2000/svg"
-														width="20"
-														height="20"
-														viewBox="0 0 24 24"
-														fill="none"
-														stroke="currentColor"
-														strokeWidth="2"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													>
-														<path d="M15.5 4H18a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5" />
-														<path d="M8.621 3.515A2 2 0 0 1 10.561 2h2.877a2 2 0 0 1 1.94 1.515L16 6H8l.621-2.485z" />
-														<path d="M9 12h6" />
-														<path d="M9 16h6" />
-													</svg>
-												</button>
-											</div>
-										
-										</div>
-									) : (
-										<div className={Style.noshares}>
-											You dont Have Any shares, create a new share by using
-											generate button
-										</div>
-									)}
-								</div> */}
-								<div className={Style.head}>
+								{/* <div className={Style.head}>
 									<span className={Style.title}>New Share</span>
 									<button onClick={handleSavedRefresh}>refresh</button>
-								</div>
-								<div className={Style.subs}>
-									<div className={Style.tag}>ALL</div>
-									<div className={Style.tag}>NSFW</div>
-									{getSubreddits().map((sub: any) => {
-										return (
-											<div key={sub.subreddit} className={Style.tag}>
-												r/{sub.subreddit} {sub.count}
-											</div>
-										);
-									})}
-								</div>
+								</div> */}
+
 								<div className={Style.preview}>
 									<div className={Style.currentLink}>
 										<div className={Style.link}>
@@ -313,29 +263,12 @@ export default function Callback() {
 										</div>
 										<button>Copy Link</button>
 									</div>
-									<div className={Style.previewHover}>
-										<div className={Style.previewTag}>PREVIEW</div>
-									</div>
-									<div className={Style.previewContent}>
-										{/* <svg>
-											<line x1="0" y1="100%" x2="100%" y2="0" />
-											<line x1="0" y1="0" x2="100%" y2="100%" />
-										</svg> */}
-										{/* <button>PREVIEW</button> */}
-										<AllPosts saved={saved} loading={loading} columns={2} />
-									</div>
 								</div>
 							</div>
 						</div>
 					</Modal>
 
 					<main className={Style.dash}>
-						{/* <div className={Style.options}>
-							<div className={Style.share}></div>
-							<div className={Style.filterBySub}></div>
-						</div>
-						<div></div> */}
-
 						<div className={Style.center}>
 							<div className={Style.content}>
 								<div className={Style.mainDash}>
@@ -355,15 +288,13 @@ export default function Callback() {
 											loading={loading}
 										/>
 									</div>
-										
+
 									<div className={Style.filterSave}>
-										
-										
 										<div className={Style.subs}>
 											<div
 												className={Style.tag}
 												style={{
-													backgroundColor: filter === "all" ? "#bf3" : "",
+													backgroundColor: filter === "all" ? "#ff006e" : "",
 													color: filter === "all" ? "#000000" : "",
 												}}
 												onClick={() => setFilter("all")}
@@ -374,13 +305,15 @@ export default function Callback() {
 											<div
 												className={Style.tag}
 												style={{
-													backgroundColor: filter === "nsfw" ? "#bf3" : "",
+													backgroundColor: filter === "nsfw" ? "#ff006e" : "",
 													color: filter === "nsfw" ? "#000000" : "",
 												}}
 												onClick={() => setFilter("nsfw")}
 											>
 												NSFW
-												<div className={Style.num}>{getNsfwPosts().length} </div>
+												<div className={Style.num}>
+													{getNsfwPosts().length}{" "}
+												</div>
 											</div>
 											{getSubreddits().map((sub: any) => {
 												return (
@@ -389,7 +322,7 @@ export default function Callback() {
 														className={Style.tag}
 														style={{
 															backgroundColor:
-																filter === sub.subreddit ? "#bf3" : "",
+																filter === sub.subreddit ? "#ff006e" : "",
 															color: filter === sub.subreddit ? "#000000" : "",
 														}}
 														onClick={() => setFilter(sub.subreddit)}

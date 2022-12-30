@@ -125,10 +125,16 @@
 
                         display: flex;
                         justify-content: space-between;
+                        font-weight: 400;
 
+                        .num{
+                            font-family: monospace;
+                        }
+                            
                         &:hover {
-                            background-color: #df3;
+                            background-color: #ff006e;
                             color: #0f0f0f;
+                            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
                         }
                     }
                 }

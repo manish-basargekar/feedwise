@@ -37,7 +37,6 @@ export default function Callback() {
 
 	const [filter, setFilter] = useState("all");
 
-
 	function openModal() {
 		setModalIsOpen(true);
 	}
@@ -85,15 +84,11 @@ export default function Callback() {
 		// 	setFilterList(saved.filter((post: any) => post.data.over_18 === true));
 		// 	return;
 		// }
-
-		
 	}, [filter]);
-
 
 	const getSubPosts = (sub: string) => {
 		return saved.filter((post: any) => post.data.subreddit === sub);
 	};
-
 
 	async function getSavedFromReddit(after: string) {
 		await fetch(`api/getSaved?after=${after}`, {
@@ -110,7 +105,7 @@ export default function Callback() {
 				setSaved((prev: any) => [...prev, ...data.data.children]);
 
 				// if (data.data.after == null) {
-					setLoading(false);
+				setLoading(false);
 				// }
 
 				// if (data.data.after) {
@@ -159,6 +154,8 @@ export default function Callback() {
 		if (docSnap.exists()) {
 			console.log("Document data:", docSnap.data());
 			setDbSaved(docSnap.data());
+		} else {
+			console.log("No such document!");
 		}
 	}
 
@@ -181,8 +178,6 @@ export default function Callback() {
 
 		//
 	};
-
-	// make an array of all subreddits along with the number of posts saved from each subreddit
 
 	const getSubreddits = () => {
 		const subreddits = saved.map((post: any) => {
@@ -225,7 +220,7 @@ export default function Callback() {
 		<>
 			{user ? (
 				<div className={Style.container}>
-					<Navbar user={user} handleShare={handleShare} />
+					<Navbar user={user} handleShare={handleShare} filter={filter} />
 
 					<Modal
 						isOpen={modalIsOpen}
@@ -342,56 +337,71 @@ export default function Callback() {
 						<div></div> */}
 
 						<div className={Style.center}>
-							<div className={Style.subs}>
-								<div
-									className={Style.tag}
-									style={{
-										backgroundColor: filter === "all" ? "#bf3" : "",
-										color: filter === "all" ? "#000000" : "",
-									}}
-									onClick={() => setFilter("all")}
-								>
-									All {saved.length}
-								</div>
-								<div
-									className={Style.tag}
-									style={{
-										backgroundColor: filter === "nsfw" ? "#bf3" : "",
-										color: filter === "nsfw" ? "#000000" : "",
-									}}
-									onClick={() => setFilter("nsfw")}
-								>
-									NSFW {getNsfwPosts().length}{" "}
-								</div>
-								{getSubreddits().map((sub: any) => {
-									return (
-										<div
-											key={sub.subreddit}
-											className={Style.tag}
-											style={{
-												backgroundColor: filter === sub.subreddit ? "#bf3" : "",
-												color: filter === sub.subreddit ? "#000000" : "",
-											}}
-											onClick={() => setFilter(sub.subreddit)}
-										>
-											r/{sub.subreddit} {sub.count}
-										</div>
-									);
-								})}
-							</div>
 							<div className={Style.content}>
-								<div className={Style.head}>
-									<span className={Style.title}>All saves</span>
+								<div className={Style.mainDash}>
+									<div className={Style.postsWrapper}>
+										<div className={Style.head}>
+											<span className={Style.title}>{filter} saves</span>
+											{/* <button>Share</button> */}
+										</div>
+										<AllPosts
+											saved={
+												filter === "all"
+													? saved
+													: filter === "nsfw"
+													? getNsfwPosts()
+													: getSubPosts(filter)
+											}
+											loading={loading}
+										/>
+									</div>
+										
+									<div className={Style.filterSave}>
+										
+										
+										<div className={Style.subs}>
+											<div
+												className={Style.tag}
+												style={{
+													backgroundColor: filter === "all" ? "#bf3" : "",
+													color: filter === "all" ? "#000000" : "",
+												}}
+												onClick={() => setFilter("all")}
+											>
+												All
+												<div className={Style.num}>{saved.length}</div>
+											</div>
+											<div
+												className={Style.tag}
+												style={{
+													backgroundColor: filter === "nsfw" ? "#bf3" : "",
+													color: filter === "nsfw" ? "#000000" : "",
+												}}
+												onClick={() => setFilter("nsfw")}
+											>
+												NSFW
+												<div className={Style.num}>{getNsfwPosts().length} </div>
+											</div>
+											{getSubreddits().map((sub: any) => {
+												return (
+													<div
+														key={sub.subreddit}
+														className={Style.tag}
+														style={{
+															backgroundColor:
+																filter === sub.subreddit ? "#bf3" : "",
+															color: filter === sub.subreddit ? "#000000" : "",
+														}}
+														onClick={() => setFilter(sub.subreddit)}
+													>
+														r/{sub.subreddit}
+														<div className={Style.num}>{sub.count}</div>
+													</div>
+												);
+											})}
+										</div>
+									</div>
 								</div>
-
-								<AllPosts saved={
-									filter === "all"
-										? saved
-										: filter === "nsfw"
-										? getNsfwPosts()
-										: getSubPosts(filter)
-
-								} loading={loading} />
 							</div>
 						</div>
 					</main>

@@ -1,26 +1,6 @@
 .container {
     width: 100%;
-
-
-    // .dash{
-    //     display: flex;
-    //     background-color: rgb(36, 44, 1);
-    //     // max-width: 1200px;
-    //     margin: auto;
-    //     justify-content: space-between;
-    //     padding: 0 2rem;
-
-    //     .options{
-    //         // flex: 1;
-    //         // width: 100rem;
-    //         width: 25rem;
-    //         min-height: 100vh;
-    //         background-color: #df3;
-    //         position: fixed;
-    //         left: 0;
-    //     }
-    // }
-
+    margin-top: 5rem;
 
     .center {
         max-width: 1200px;
@@ -58,7 +38,7 @@
     }
 
     .content {
-        width: 100%;
+        // width: 100%;
         // background-color: magenta;
         min-height: 100vh;
         margin: auto;
@@ -67,46 +47,92 @@
         flex-wrap: wrap;
         gap: 1rem;
         margin-top: 1rem;
-        .head {
+        max-width: 1200px;
+
+        .mainDash {
+            // display: flex;
+            // background-color: #fe5252;
             width: 100%;
-            border-bottom: 1px solid rgb(38, 38, 38);
-            padding-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 1rem;
+            margin-left: 300px;
 
-            .title {
-                text-transform: uppercase;
-                // font-size: 1.5rem;
-                // font-weight: 600;
-                letter-spacing: 0.04em;
-                color: #a2a1a1;
+            .postsWrapper {
+                flex: 3;
+                padding-right: 1rem;
+                // background-color: #df3;
+                // background-color: #0f0f0f;
+                .head {
+                    width: 98%;
+                    border-bottom: 1px solid rgb(38, 38, 38);
+                    padding-bottom: 0.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: .5rem;
+                    margin-right: 1rem;
+                    margin-left: 1rem;
+
+                    .title {
+                        text-transform: uppercase;
+                        // font-size: 1.5rem;
+                        // font-weight: 600;
+                        letter-spacing: 0.04em;
+                        color: #a2a1a1;
+                    }
+                }
             }
-        }
-    }
-}
 
-.subs {
-    flex: 2;
-    // background-color: magenta;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin-top: 1rem;
-    max-height: 10rem;
-    overflow: scroll;
+            .filterSave {
+                flex: 1;
+                width: 100%;
+                max-height: 100vh;
+                background-color: #0f0f0f;
+                padding: 1rem;
+                padding-top: 0;
+                overflow: scroll;
+                position: fixed;
+                right: 50%;
+                margin-right: 300px;
+                top: 5rem;
+                width: 300px;
+                border-radius: 4px;
 
-    .tag {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.7rem;
-        border-radius: 4px;
-        background-color: #0f0f0f;
-        color: #a2a1a1;
-        cursor: pointer;
+                .shareBtn{
+                    width: 100%;
+                }
 
-        &:hover {
-            background-color: #df3;
-            color: #0f0f0f;
+                .subs {
+                    flex: 2;
+                    // background-color: magenta;
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    gap: 0.3rem;
+                    margin-top: 1rem;
+                    // max-height: 100vh;
+                    // overflow: scroll;
+
+                    .num {
+                    }
+
+                    .tag {
+                        font-size: 0.9rem;
+                        padding: 0.4rem 0.7rem;
+                        border-radius: 2px;
+                        background-color: #1a1a1a;
+                        color: #a2a1a1;
+                        cursor: pointer;
+
+                        display: flex;
+                        justify-content: space-between;
+
+                        &:hover {
+                            background-color: #df3;
+                            color: #0f0f0f;
+                        }
+                    }
+                }
+            }
         }
     }
 }

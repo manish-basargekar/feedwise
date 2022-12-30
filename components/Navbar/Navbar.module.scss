@@ -1,29 +1,34 @@
 .navbar {
-     background-color: #0f0f0f;
-     border-bottom: 1px solid rgb(38, 38, 38);
+    background-color: #0f0f0f;
+    border-bottom: 1px solid rgb(38, 38, 38);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: saturate(180%) blur(20px);
 
-     .shareBtn{
+    .shareBtn {
         // padding: .2rem 1rem;
         height: fit-content;
         cursor: pointer;
-     }
+    }
     .content {
         display: flex;
         justify-content: space-between;
         align-items: center;
         align-items: center;
-        
+
         padding: 0.5rem 0;
-       
+
         max-width: 1200px;
         margin: auto;
 
         // background-color: cyan;
 
-
         .right {
             display: flex;
-            gap: .6rem;
+            gap: 0.6rem;
             // justify-content: center;
             align-items: center;
         }
@@ -72,17 +77,10 @@
         }
     }
 
-    .profile-right{
+    .profile-right {
         position: relative;
     }
 }
-
-
-
-
-
-
-
 
 .dropdownWrapper {
     // font-size: 2rem;
@@ -121,8 +119,6 @@
     }
 }
 
-
-
 .arrow {
     //   --siteHeaderArrowBackgroundColor: rgb(255, 255, 255);
     position: absolute;
@@ -155,15 +151,14 @@
     font-weight: 600;
 }
 
-
 .dropdown-links {
     display: flex;
     flex-direction: column;
     // padding-top: 1.5rem;
 
-    button{
+    button {
         cursor: pointer;
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }

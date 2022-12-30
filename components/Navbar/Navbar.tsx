@@ -11,9 +11,10 @@ type handleShare = () => void;
 type NavbarProps = {
 	user: user;
 	handleShare: handleShare;
+	filter: string;
 };
 
-export default function Navbar({ user, handleShare }: NavbarProps) {
+export default function Navbar({ user, handleShare, filter }: NavbarProps) {
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const dropDownRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -55,7 +56,13 @@ export default function Navbar({ user, handleShare }: NavbarProps) {
 				<h1 className={Style.logo}>Feedwise</h1>
 				<div className={Style.right}>
 					<button onClick={handleShare} className={Style.shareBtn}>
-						Share
+						Share{" "}
+						{filter === "all"
+							? "All"
+							: filter === "nsfw"
+							? "nsfw"
+							: `r/${filter}`}{" "}
+						Posts
 					</button>
 
 					{/* <img src={user.snoovatar_img} alt={`${user.name}'s reddit avatar`} /> */}
@@ -104,7 +111,6 @@ export default function Navbar({ user, handleShare }: NavbarProps) {
 									<span className={Style["dropdown-profile-details--name"]}>
 										/u/{user.name}
 									</span>
-									
 								</div>
 								<div className={Style["dropdown-links"]}>
 									<button onClick={handleLogout}>Log out</button>

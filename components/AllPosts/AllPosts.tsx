@@ -52,7 +52,7 @@ export default function AllPosts(props: AllPostsProps) {
 								700: 1,
 							} as any
 						}
-						className="my-masonry-grid"
+						className={Style["my-masonry-grid"]}
 						columnClassName="my-masonry-grid_column"
 					>
 						{saved.map((post: any) => {
@@ -61,8 +61,9 @@ export default function AllPosts(props: AllPostsProps) {
 									href={"https://www.reddit.com" + post.data.permalink}
 									target="_blank"
 									rel="noopener noreferrer"
+									key={post.data.id}
 								>
-									<div className={Style.post} key={post.data.id}>
+									<div className={Style.post}>
 										<div className={Style.postHeader}>
 											<span>r/{post.data.subreddit}</span>•
 											<span>
@@ -70,16 +71,16 @@ export default function AllPosts(props: AllPostsProps) {
 											</span>
 											•<span>{timeSince(post.data.created_utc)}</span>
 										</div>
-										<h3 className="title">{post.data.title}</h3>
-										<div className="tag">
+										<h3 className={Style.title}>{post.data.title}</h3>
+										<div className={Style.tag}>
 											{post.data.over_18 ? (
-												<span className="over18">NSFW</span>
+												<span className={Style.over18}>NSFW</span>
 											) : (
 												<span></span>
 											)}
 										</div>
 										<div
-											className="content"
+											className={Style.content}
 											style={{
 												filter: post.data.over_18 ? "blur(5px)" : "none",
 											}}
@@ -98,7 +99,7 @@ export default function AllPosts(props: AllPostsProps) {
 												<div></div>
 											)}
 											{post.data.url ? (
-												<img src={post.data.url} alt="" />
+												<img src={post.data.url} alt="" loading="lazy" />
 											) : (
 												<div></div>
 											)}
@@ -106,53 +107,52 @@ export default function AllPosts(props: AllPostsProps) {
 												post.data.gallery_data.items.map((item: any) => {
 													return (
 														<div>
-															<img src={
-																`
+															<img
+																src={`
 																https://i.redd.it/${item.media_id}.jpg
-																`
-															} alt="" />
+																`}
+																alt=""
+															/>
 														</div>
-													)
+													);
 												})
 											) : (
-												
 												<></>
 											)}
-										
 										</div>
-										<div className="postFooter">
-											ups:
-											{post.data.ups}
+										<div className={Style.postFooter}>
+											<div className={Style.upvote}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="currentColor"
+													strokeWidth="1"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+												>
+													<path d="M12 3l9 7h-4.99L16 21H8V10H3l9-7z" />
+												</svg>
+												<span>{post.data.ups}</span>
+											</div>
+											<div className="save">
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="20"
+													height="20"
+													viewBox="0 0 24 24"
+													fill="#898888"
+													stroke="#898888"
+													strokeWidth="1.5"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+												>
+													<path d="M4 5v14.586c0 .89 1.077 1.337 1.707.707L12 14l6.293 6.293c.63.63 1.707.184 1.707-.707V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" />
+												</svg>
+											</div>
 										</div>
-
-										{/* <div className={Style.postHeader}>
-										<img
-											src={post.data.url ? post.data.url : post.data.thumbnail}
-											alt="post image"
-											// width={100}
-											// height={100}
-										/>
-
-										<div className={Style.postInfo}>
-											<span>
-												{post.data.title
-													? post.data.title
-													: post.data.link_title}
-											</span>
-											
-											<a
-												href={`http://www.reddit.com${post.data.permalink}`}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												Link
-											</a>
-										</div>
-									</div> */}
-										{/* <div className={Style.postBody}>
-										<p>{post.data.selftext}</p>
-										<p>{post.data.body}</p>
-									</div> */}
 									</div>
 								</a>
 							);

@@ -251,11 +251,7 @@ export default function Callback() {
 								</button>
 							</div>
 							<div className={Style.infoTop}>
-								{/* <div className={Style.head}>
-									<span className={Style.title}>New Share</span>
-									<button onClick={handleSavedRefresh}>refresh</button>
-								</div> */}
-
+								
 								<div className={Style.preview}>
 									<div className={Style.currentLink}>
 										<div className={Style.link}>
@@ -314,6 +310,12 @@ export default function Callback() {
 												<div className={Style.num}>
 													{getNsfwPosts().length}{" "}
 												</div>
+											</div>
+											<div style={{
+												padding: "10px 0",
+											}}>
+
+											<hr />
 											</div>
 											{getSubreddits().map((sub: any) => {
 												return (

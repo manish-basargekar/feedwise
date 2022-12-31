@@ -5,9 +5,12 @@
     // background-color: aqua;
     max-width: 900px;
     width: 100%;
-    
+
     padding-left: 1rem;
-    
+    a{
+        text-decoration: none;
+        color: #fff;
+    }
 }
 
 .post {
@@ -24,4 +27,19 @@
     // }
 
     // background-color: cyan;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 50rem;
+    overflow: hidden;
+    &:hover{
+        opacity: .6;
+    }
+
+    .postHeader {
+        font-size: 0.9rem;
+        display: flex;
+        gap: 0.5rem;
+        color: #898888;
+    }
 }

@@ -64,12 +64,12 @@ export const getServerSideProps: GetServerSideProps = async ({
 				refresh_token: refresh_token,
 				grant_type: "refresh_token",
 			});
-			setCookie("refresh_token", token.refresh_token, {
-				req,
-				res,
-				maxAge: 60 * 60,
-				httpOnly: true,
-			});
+			// setCookie("refresh_token", token.refresh_token, {
+			// 	req,
+			// 	res,
+			// 	maxAge: 60 * 60,
+			// 	httpOnly: true,
+			// });
 			setCookie("access_token", token.access_token, {
 				req,
 				res,
@@ -93,12 +93,12 @@ export const getServerSideProps: GetServerSideProps = async ({
 				grant_type: "authorization_code",
 				redirect_uri: REDIRECT_URI,
 			});
-			setCookie("refresh_token", token.refresh_token, {
-				req,
-				res,
-				maxAge: 60 * 60,
-				httpOnly: true,
-			});
+			// setCookie("refresh_token", token.refresh_token, {
+			// 	req,
+			// 	res,
+			// 	maxAge: 60 * 60,
+			// 	httpOnly: true,
+			// });
 			setCookie("access_token", token.access_token, {
 				req,
 				res,

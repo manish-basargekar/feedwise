@@ -106,7 +106,7 @@ export default function AllPosts(props: AllPostsProps) {
 											{post.data.gallery_data ? (
 												post.data.gallery_data.items.map((item: any) => {
 													return (
-														<div>
+														<div key={item.media_id}>
 															<img
 																src={`
 																https://i.redd.it/${item.media_id}.jpg

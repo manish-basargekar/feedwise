@@ -1,0 +1,60 @@
+.filterSave {
+                flex: 1;
+                width: 100%;
+                max-height: 90vh;
+                background-color: #0f0f0f;
+                padding: 1rem;
+                padding-top: 0;
+                overflow: scroll;
+                position: fixed;
+                right: 50%;
+                margin-right: 300px;
+                top: 5rem;
+                width: 300px;
+                border-radius: 4px;
+                @media screen and (max-width: 1200px) {
+                    display: none;
+                }
+
+                .shareBtn {
+                    width: 100%;
+                }
+
+                .subs {
+                    flex: 2;
+                    // background-color: magenta;
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    gap: 0.3rem;
+                    margin-top: 1rem;
+                    // max-height: 100vh;
+                    // overflow: scroll;
+
+                    .num {
+                    }
+
+                    .tag {
+                        font-size: 0.9rem;
+                        padding: 0.4rem 0.7rem;
+                        border-radius: 2px;
+                        background-color: #1a1a1a;
+                        color: #a2a1a1;
+                        cursor: pointer;
+
+                        display: flex;
+                        justify-content: space-between;
+                        font-weight: 400;
+
+                        .num {
+                            // font-family: monospace;
+                        }
+
+                        &:hover {
+                            background-color: #ff4500;
+                            color: #0f0f0f;
+                            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+                        }
+                    }
+                }
+            }

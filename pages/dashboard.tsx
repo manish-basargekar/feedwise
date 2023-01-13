@@ -8,13 +8,14 @@ import Navbar from "../components/Navbar/Navbar";
 
 import Modal from "react-modal";
 
-import { doc, setDoc, Timestamp, getDoc } from "firebase/firestore";
+import { doc, setDoc, Timestamp, getDoc, arrayUnion } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 
 import { db } from "../Firebase.js";
 import { nanoid } from "nanoid";
 
 import AllPosts from "../components/AllPosts/AllPosts";
+import FilterBySub from "../components/FilterBySub/FilterBySub";
 
 type user = {
 	name: string;
@@ -33,9 +34,9 @@ export default function Callback() {
 
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 
-	const [dbSaved, setDbSaved] = useState([] as any);
-
 	const [filter, setFilter] = useState("all");
+
+	const [filterShareID, setFilterShareID] = useState("");
 
 	function openModal() {
 		setModalIsOpen(true);
@@ -63,28 +64,14 @@ export default function Callback() {
 		getSavedFromReddit(""); //TODO: add after
 	}, []);
 
-	useEffect(() => {
-		if (!user.name) return;
-		checkUserSaves();
-	}, [user]);
+	// useEffect(() => {
+	// 	if (!user.name) return;
+	// 	checkUserSaves();
+	// }, [user]);
 
-	useEffect(() => {
-		console.log("savedd", saved);
-	}, [saved]);
-
-	useEffect(() => {
-		console.log("filter", filter);
-
-		// if (filter === "all") {
-		// 	setFilterList(saved);
-		// 	return;
-		// }
-
-		// if (filter === "nsfw") {
-		// 	setFilterList(saved.filter((post: any) => post.data.over_18 === true));
-		// 	return;
-		// }
-	}, [filter]);
+	// useEffect(() => {
+	// 	console.log("savedd", saved);
+	// }, [saved]);
 
 	const getSubPosts = (sub: string) => {
 		return saved.filter((post: any) => post.data.subreddit === sub);
@@ -132,49 +119,85 @@ export default function Callback() {
 
 		// Check if user has already saved posts
 
-		console.log("saving to firebase");
-		if (!loading && !dbSaved) {
-			saveToFirebase(newId);
-			console.log(saved);
-		}
+		saveToFirebase(newId);
 	};
 
-	async function checkUserSaves() {
-		// const docRef = doc(db, "saved-nsfw", user.name);
-		// const docSnap = await getDoc(docRef);
+	// async function checkUserSaves() {
+	// 	// const docRef = doc(db, "saved-nsfw", user.name);
+	// 	// const docSnap = await getDoc(docRef);
 
-		console.log("checking user saves", user.name);
+	// 	console.log("checking user saves", user.name);
 
-		// check if user document in saved/username exists
+	// 	// check if user document in saved/username exists
 
-		const docRef = doc(db, "saved", user.name);
+	// 	const docRef = doc(db, "saved", user.name);
 
-		const docSnap = await getDoc(docRef);
+	// 	const docSnap = await getDoc(docRef);
 
-		if (docSnap.exists()) {
-			console.log("Document data:", docSnap.data());
-			setDbSaved(docSnap.data());
-		} else {
-			console.log("No such document!");
-		}
-	}
+	// 	if (docSnap.exists()) {
+	// 		console.log("Document data:", docSnap.data());
+	// 	} else {
+	// 		console.log("No such document!");
+	// 	}
+	// }
+
+	const getFilteredPosts = () => {
+		return filter === "all"
+			? saved
+			: filter === "nsfw"
+			? getNsfwPosts()
+			: getSubPosts(filter);
+	};
 
 	const saveToFirebase = async (newId: string) => {
 		// const collectionRef = collection(db, "saved-nsfw", `${user.name}`, id);
-		saved.forEach(async (post: any) => {
-			const docRef = doc(db, "saved", user.name, newId, post.data.id);
-			await setDoc(docRef, {
-				...post.data,
-				created_at: Timestamp.fromDate(new Date()),
-			});
 
-			console.log("Document written with ID: ", docRef.id);
+		console.log("filtered", getFilteredPosts());
+
+		const filtered = getFilteredPosts();
+
+		// check if user has already saved current filtered posts
+		await getDoc(doc(db, "saved", user.name)).then((docSnap) => {
+			if (docSnap.exists()) {
+				// console.log("Document data:", docSnap.data().saved);
+
+				const savedFilters = docSnap.data().saved;
+
+				const filterExists = savedFilters.find(
+					(obj: { filter: string }) => obj.filter === filter
+				);
+
+				if (filterExists) {
+					console.log("filter exists", filterExists);
+
+					setFilterShareID(filterExists.id);
+				} else {
+					setFilterShareID("CREATE NEW");
+				}
+			} else {
+				console.log("No such document!");
+			}
 		});
 
-		await setDoc(doc(db, "saved", user.name), {
-			created_at: Timestamp.fromDate(new Date()),
-			id: newId,
-		});
+		// filtered.forEach(async (post: any) => {
+		// 	const docRef = doc(db, "saved", user.name, newId, post.data.id);
+		// 	await setDoc(docRef, {
+		// 		...post.data,
+		// 		created_at: Timestamp.fromDate(new Date()),
+		// 	});
+
+		// 	console.log("Document written with ID: ", docRef.id);
+		// });
+
+		// const currentFilter =
+		// 	filter === "all" ? "all" : filter === "nsfw" ? "nsfw" : filter;
+
+		// await setDoc(doc(db, "saved", user.name), {
+		// 	created_at: Timestamp.fromDate(new Date()),
+		// 	saved: arrayUnion({ id: newId, filter: currentFilter }),
+		// },{
+		// 	merge: true
+		// });
 
 		//
 	};
@@ -208,12 +231,6 @@ export default function Callback() {
 		});
 
 		return nsfwPosts;
-	};
-
-	const handleSavedRefresh = () => {
-		setLoading(true);
-		const newId = nanoid();
-		saveToFirebase(newId);
 	};
 
 	return (
@@ -251,92 +268,48 @@ export default function Callback() {
 								</button>
 							</div>
 							<div className={Style.infoTop}>
-								
 								<div className={Style.preview}>
 									<div className={Style.currentLink}>
 										<div className={Style.link}>
-											{`www.localhost:3000/shared/${dbSaved ? dbSaved.id : ""}`}
+											{`www.localhost:3000/saves/${
+												filterShareID ? filterShareID : "..."
+											}`}
 										</div>
-										<button>Copy Link</button>
+										<button>Copy</button>
 									</div>
 								</div>
+								<span>
+									To share posts from a particular subreddit, select that
+									subreddit from the list. If you select 'All,' all posts will
+									be shared.
+									<p>
+										If you select 'NSFW posts,' only posts marked as NSFW will
+										be shared. These are posts that may contain explicit or
+										inappropriate content.
+									</p>
+								</span>
 							</div>
 						</div>
 					</Modal>
 
 					<main className={Style.dash}>
-						<div className={Style.center}>
-							<div className={Style.content}>
-								<div className={Style.mainDash}>
-									<div className={Style.postsWrapper}>
-										<div className={Style.head}>
-											<span className={Style.title}>{filter} saves</span>
-											{/* <button>Share</button> */}
-										</div>
-										<AllPosts
-											saved={
-												filter === "all"
-													? saved
-													: filter === "nsfw"
-													? getNsfwPosts()
-													: getSubPosts(filter)
-											}
-											loading={loading}
-										/>
+						<div className={Style.content}>
+							<div className={Style.mainDash}>
+								<div className={Style.postsWrapper}>
+									<div className={Style.head}>
+										<span className={Style.title}>{filter} saves</span>
+										{/* <button>Share</button> */}
 									</div>
-
-									<div className={Style.filterSave}>
-										<div className={Style.subs}>
-											<div
-												className={Style.tag}
-												style={{
-													backgroundColor: filter === "all" ? "#ff006e" : "",
-													color: filter === "all" ? "#000000" : "",
-												}}
-												onClick={() => setFilter("all")}
-											>
-												All
-												<div className={Style.num}>{saved.length}</div>
-											</div>
-											<div
-												className={Style.tag}
-												style={{
-													backgroundColor: filter === "nsfw" ? "#ff006e" : "",
-													color: filter === "nsfw" ? "#000000" : "",
-												}}
-												onClick={() => setFilter("nsfw")}
-											>
-												NSFW
-												<div className={Style.num}>
-													{getNsfwPosts().length}{" "}
-												</div>
-											</div>
-											<div style={{
-												padding: "10px 0",
-											}}>
-
-											<hr />
-											</div>
-											{getSubreddits().map((sub: any) => {
-												return (
-													<div
-														key={sub.subreddit}
-														className={Style.tag}
-														style={{
-															backgroundColor:
-																filter === sub.subreddit ? "#ff006e" : "",
-															color: filter === sub.subreddit ? "#000000" : "",
-														}}
-														onClick={() => setFilter(sub.subreddit)}
-													>
-														r/{sub.subreddit}
-														<div className={Style.num}>{sub.count}</div>
-													</div>
-												);
-											})}
-										</div>
-									</div>
+									<AllPosts saved={getFilteredPosts()} loading={loading} />
 								</div>
+
+								<FilterBySub
+									getSubreddits={getSubreddits}
+									filter={filter}
+									setFilter={setFilter}
+									getNsfwPosts={getNsfwPosts}
+									saved={saved}
+								/>
 							</div>
 						</div>
 					</main>

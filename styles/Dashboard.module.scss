@@ -2,13 +2,6 @@
     width: 100%;
     margin-top: 5rem;
 
-    .center {
-        max-width: 1200px;
-        // background-color: cyan;
-        margin: auto;
-        // flex: 2;
-        //  padding:0 1rem;
-    }
 
     .options {
         max-width: 900px;
@@ -57,8 +50,8 @@
             margin-left: 300px;
 
             @media screen and (max-width: 1200px) {
-                   margin: 0;
-                }
+                margin: 0;
+            }
 
             .postsWrapper {
                 flex: 3;
@@ -86,66 +79,7 @@
                 }
             }
 
-            .filterSave {
-                flex: 1;
-                width: 100%;
-                max-height: 90vh;
-                background-color: #0f0f0f;
-                padding: 1rem;
-                padding-top: 0;
-                overflow: scroll;
-                position: fixed;
-                right: 50%;
-                margin-right: 300px;
-                top: 5rem;
-                width: 300px;
-                border-radius: 4px;
-                @media screen and (max-width: 1200px) {
-                  display: none;
-                }
-
-                .shareBtn {
-                    width: 100%;
-                }
-
-                .subs {
-                    flex: 2;
-                    // background-color: magenta;
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    gap: 0.3rem;
-                    margin-top: 1rem;
-                    // max-height: 100vh;
-                    // overflow: scroll;
-
-                    .num {
-                    }
-
-                    .tag {
-                        font-size: 0.9rem;
-                        padding: 0.4rem 0.7rem;
-                        border-radius: 2px;
-                        background-color: #1a1a1a;
-                        color: #a2a1a1;
-                        cursor: pointer;
-
-                        display: flex;
-                        justify-content: space-between;
-                        font-weight: 400;
-
-                        .num {
-                            font-family: monospace;
-                        }
-
-                        &:hover {
-                            background-color: #ff006e;
-                            color: #0f0f0f;
-                            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-                        }
-                    }
-                }
-            }
+            
         }
     }
 }
@@ -225,7 +159,7 @@
         align-items: flex-end;
 
         h2 {
-            text-transform: uppercase;
+            // text-transform: uppercase;
             color: #a2a1a1;
             font-weight: normal;
         }

@@ -34,9 +34,9 @@ export default function AllPosts(props: AllPostsProps) {
 		}
 	}
 
-	useEffect(() => {
-		console.log(saved);
-	}, [saved]);
+	// useEffect(() => {
+	// 	console.log(saved);
+	// }, [saved]);
 
 	return (
 		<>
@@ -52,7 +52,7 @@ export default function AllPosts(props: AllPostsProps) {
 								700: 1,
 							} as any
 						}
-						className={Style["my-masonry-grid"]}
+						className="my-masonry-grid"
 						columnClassName="my-masonry-grid_column"
 					>
 						{saved.map((post: any) => {
@@ -67,18 +67,18 @@ export default function AllPosts(props: AllPostsProps) {
 										<div className={Style.postHeader}>
 											<span>r/{post.data.subreddit}</span>•
 											<span>
-												{""}Posted by /u/{post.data.author}
+												{""} by u/{post.data.author}
 											</span>
 											•<span>{timeSince(post.data.created_utc)}</span>
 										</div>
 										<h3 className={Style.title}>{post.data.title}</h3>
-										<div className={Style.tag}>
+										{/* <div className={Style.tag}>
 											{post.data.over_18 ? (
 												<span className={Style.over18}>NSFW</span>
 											) : (
 												<span></span>
 											)}
-										</div>
+										</div> */}
 										<div
 											className={Style.content}
 											style={{

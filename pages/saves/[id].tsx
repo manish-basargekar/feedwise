@@ -20,17 +20,12 @@ export default function Saved() {
 		const docRef = doc(db, "saved-nsfw", id);
 		const docSnap = await getDoc(docRef);
 
-		if (docSnap.exists()) {
-			console.log("Document data:", docSnap.data());
-		} else {
-			// doc.data() will be undefined in this case
-			console.log("No such document!");
-		}
+		
 	};
 
 	return (
 		<div>
-			<h1>saved</h1>
+			<h1>saves : {id}</h1>
 		</div>
 	);
 }

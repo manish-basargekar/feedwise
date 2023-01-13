@@ -280,10 +280,10 @@ export default function Callback() {
 								</div>
 								<span>
 									To share posts from a particular subreddit, select that
-									subreddit from the list. If you select 'All,' all posts will
+									subreddit from the list. If you select &apos;All,&apos; all posts will
 									be shared.
 									<p>
-										If you select 'NSFW posts,' only posts marked as NSFW will
+										If you select &apos;NSFW posts,&apos; only posts marked as NSFW will
 										be shared. These are posts that may contain explicit or
 										inappropriate content.
 									</p>

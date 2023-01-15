@@ -1,17 +1,20 @@
 import Style from "./Navbar.module.scss";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+
 
 type user = {
-	name: string;
-	snoovatar_img: string;
+	name?: string;
+	snoovatar_img?: string;
+
 };
 
 type handleShare = () => void;
 
 type NavbarProps = {
-	user: user;
-	handleShare: handleShare;
-	filter: string;
+	user?: user;
+	handleShare?: handleShare;
+	filter?: string;
 };
 
 export default function Navbar({ user, handleShare, filter }: NavbarProps) {
@@ -53,20 +56,25 @@ export default function Navbar({ user, handleShare, filter }: NavbarProps) {
 	return (
 		<nav className={Style.navbar}>
 			<div className={Style.content}>
-				<h1 className={Style.logo}>Feedwise</h1>
-				<div className={Style.right}>
-					<button onClick={handleShare} className={Style.shareBtn}>
-						Share{" "}
-						{filter === "all"
-							? "All"
-							: filter === "nsfw"
-							? "nsfw"
-							: `r/${filter}`}{" "}
-						Posts
-					</button>
+				<Link href="/" className={Style.link}>
 
-					{/* <img src={user.snoovatar_img} alt={`${user.name}'s reddit avatar`} /> */}
-					{/* <div className={Style.modal}>
+					<h1 className={Style.logo}>Savedit</h1>
+				</Link>
+				{
+					user && (
+						<div className={Style.right}>
+							<button onClick={handleShare} className={Style.shareBtn}>
+								Share{" "}
+								{filter === "all"
+									? "All"
+									: filter === "nsfw"
+										? "nsfw"
+										: `r/${filter}`}{" "}
+								Posts
+							</button>
+
+							{/* <img src={user.snoovatar_img} alt={`${user.name}'s reddit avatar`} /> */}
+							{/* <div className={Style.modal}>
 						<button className={Style.userOptions} onClick={handleLogout}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -89,36 +97,38 @@ export default function Navbar({ user, handleShare, filter }: NavbarProps) {
 							<span>Log out</span>
 						</button>
 					</div> */}
-					<div className={Style["profile-right"]}>
-						<div ref={dropDownRef}>
-							<img
-								className={Style.profile}
-								src={user.snoovatar_img}
-								onClick={() => setDropdownActive(!dropdownActive)}
-							></img>
-							<div
-								className={
-									dropdownActive
-										? `${Style["dropdownWrapper"]} 
+							<div className={Style["profile-right"]}>
+								<div ref={dropDownRef}>
+									<img
+										className={Style.profile}
+										src={user.snoovatar_img}
+										onClick={() => setDropdownActive(!dropdownActive)}
+									></img>
+									<div
+										className={
+											dropdownActive
+												? `${Style["dropdownWrapper"]} 
 						${Style.active}
 						`
-										: `${Style["dropdownWrapper"]} `
-								}
-								id="dropdownWrapper"
-								style={{ width: "max-content" }}
-							>
-								<div className={Style["dropdown-profile-details"]}>
-									<span className={Style["dropdown-profile-details--name"]}>
-										/u/{user.name}
-									</span>
-								</div>
-								<div className={Style["dropdown-links"]}>
-									<button onClick={handleLogout}>Log out</button>
+												: `${Style["dropdownWrapper"]} `
+										}
+										id="dropdownWrapper"
+										style={{ width: "max-content" }}
+									>
+										<div className={Style["dropdown-profile-details"]}>
+											<span className={Style["dropdown-profile-details--name"]}>
+												/u/{user.name}
+											</span>
+										</div>
+										<div className={Style["dropdown-links"]}>
+											<button onClick={handleLogout}>Log out</button>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
+						</div>)
+
+				}
 			</div>
 		</nav>
 	);

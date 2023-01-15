@@ -34,9 +34,9 @@ export default function AllPosts(props: AllPostsProps) {
 		}
 	}
 
-	// useEffect(() => {
-	// 	console.log(saved);
-	// }, [saved]);
+	useEffect(() => {
+		console.log(saved);
+	}, [saved]);
 
 	return (
 		<>
@@ -44,6 +44,7 @@ export default function AllPosts(props: AllPostsProps) {
 				<div>loading</div>
 			) : (
 				<div className={Style.postsContainer}>
+					
 					<Masonry
 						breakpointCols={
 							{

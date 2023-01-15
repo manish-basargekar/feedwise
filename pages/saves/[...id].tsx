@@ -1,0 +1,59 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { collection, doc, DocumentData, getDoc, getDocs } from "firebase/firestore";
+import { db } from "../../Firebase.js";
+import AllPosts from "../../components/AllPosts/AllPosts";
+import Style from "../../styles/SavesPage.module.scss";
+import Navbar from "../../components/Navbar/Navbar"
+
+export default function Saved() {
+	const router = useRouter();
+
+	const [posts, setPosts] = useState([]) as any
+
+
+	console.log(router.query.id);
+
+	useEffect(() => {
+
+		if (!router.query.id) return
+
+
+		getSaved(router.query.id[0], router.query.id[1])
+
+		// const user = router.query.id[0]
+		// const id = router.query.id[1]
+	}, [router]);
+
+	const getSaved = async (user: string, id: string) => {
+		const docRef = collection(db, "saved", user, id);
+		const docSnap = await getDocs(docRef);
+
+		let allPosts: DocumentData[] = []
+
+		docSnap.forEach((doc) => {
+			console.log(doc.id, " => ", doc.data());
+			allPosts.push(doc.data())
+		});
+
+
+
+		setPosts(allPosts)
+		console.log(allPosts)
+
+
+	};
+
+	return (
+		<div className={Style.container}>
+			<Navbar />
+			<div className={Style.content}>
+
+				{
+					posts && <AllPosts saved={posts} loading={false} columns={1} />
+
+				}
+			</div>
+		</div>
+	);
+}

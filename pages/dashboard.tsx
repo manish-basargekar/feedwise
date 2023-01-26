@@ -8,11 +8,14 @@ import Navbar from "../components/Navbar/Navbar";
 
 import Modal from "react-modal";
 
-import { doc, setDoc, Timestamp, getDoc, arrayUnion } from "firebase/firestore";
+import { Tooltip } from "react-tooltip";
+
+import "react-tooltip/dist/react-tooltip.css";
+
+import { doc, setDoc, Timestamp, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 
 import { db } from "../Firebase.js";
-import { nanoid } from "nanoid";
 
 import AllPosts from "../components/AllPosts/AllPosts";
 import FilterBySub from "../components/FilterBySub/FilterBySub";
@@ -20,7 +23,7 @@ import FilterBySub from "../components/FilterBySub/FilterBySub";
 type user = {
 	name: string;
 	snoovatar_img: string;
-
+	id: string;
 };
 
 Modal.setAppElement("#modal");
@@ -37,7 +40,11 @@ export default function Callback() {
 
 	const [filter, setFilter] = useState("all");
 
-	const [filterShareID, setFilterShareID] = useState("");
+	const [filterShareURL, setFilterShareURL] = useState(false);
+
+	const [copySuccess, setCopySuccess] = useState("");
+
+	const [refetch, setRefetch] = useState(false);
 
 	function openModal() {
 		setModalIsOpen(true);
@@ -45,7 +52,7 @@ export default function Callback() {
 
 	function closeModal() {
 		setModalIsOpen(false);
-		setFilterShareID("");
+		setFilterShareURL(false);
 	}
 
 	useEffect(() => {
@@ -61,10 +68,10 @@ export default function Callback() {
 			.then((data) => {
 				// console.log(data)
 				setUser(data);
-			}).catch((err) => {
-				console.log(err)
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-
 
 		getSavedFromReddit(""); //TODO: add after
 	}, []);
@@ -96,9 +103,7 @@ export default function Callback() {
 				// console.log(data.data.children);
 				setSaved((prev: any) => [...prev, ...data.data.children]);
 
-				// if (data.data.after == null) {
 				setLoading(false);
-				// }
 
 				// if (data.data.after) {
 				// 	console.log(data.data.after);
@@ -117,17 +122,17 @@ export default function Callback() {
 	const handleShare = () => {
 		openModal();
 
-		// setNsfw(nsfw);
+		// const newId = nanoid();
+		const filtered = getFilteredPosts();
 
-		const newId = nanoid();
-		// setId(newId);
-
-		// Check if user has already saved posts
-
-		saveToFirebase(newId);
+		if (filtered.length === 1) {
+			console.log("filtered", filtered.length);
+		} else {
+			console.log("Saving to firebase");
+			saveToFirebase();
+		}
 	};
 
-	
 	const getFilteredPosts = () => {
 		return filter === "all"
 			? saved
@@ -136,49 +141,29 @@ export default function Callback() {
 				: getSubPosts(filter);
 	};
 
-	const saveToFirebase = async (newId: string) => {
-		// const collectionRef = collection(db, "saved-nsfw", `${user.name}`, id);
-
+	const saveToFirebase = async () => {
 		console.log("filtered", getFilteredPosts());
 
 		const filtered = getFilteredPosts();
+		const querySnapshot = await getDocs(
+			collection(db, "users", user.id, filter)
+		);
 
-		// check if user has already saved current filtered posts
-		await getDoc(doc(db, "saved", user.name)).then((docSnap) => {
-			if (docSnap.exists()) {
-				// console.log("Document data:", docSnap.data().saved);
+		if (querySnapshot.size === 0) {
+			console.log("Creating new share");
+			createShare(filtered);
+		} else {
+			console.log("Updating share");
+			setFilterShareURL(true);
+			setRefetch(true);
+		}
 
-				const savedFilters = docSnap.data().saved;
-
-				const filterExists = savedFilters.find(
-					(obj: { filter: string }) => obj.filter === filter
-				);
-
-				if (filterExists) {
-					console.log("filter exists", filterExists);
-
-					setFilterShareID(filterExists.id);
-					// TODO Update the share in firebase
-				} else {
-					// setFilterShareID("UPDATE FILTER");
-					createShare(filtered, newId);
-					// TODO Update the share in firebase
-				}
-			} else {
-				console.log("No such document!");
-				createShare(filtered, newId);
-				setFilterShareID(newId);
-				// TODO paste the ID in the share link for user to copy
-			}
-		});
-
-
+		// createShare(filtered, newId);
 	};
 
-
-	const createShare = async (filtered: any[], newId: string) => {
+	const createShare = async (filtered: any[]) => {
 		filtered.forEach(async (post: any) => {
-			const docRef = doc(db, "saved", user.name, newId, post.data.id);
+			const docRef = doc(db, "users", user.id, filter, post.data.id);
 			await setDoc(docRef, {
 				...post,
 				created_at: Timestamp.fromDate(new Date()),
@@ -187,16 +172,23 @@ export default function Callback() {
 			console.log("Document written with ID: ", docRef.id);
 		});
 
-		const currentFilter =
-			filter === "all" ? "all" : filter === "nsfw" ? "nsfw" : filter;
+		// const currentFilter =
+		// filter === "all" ? "all" : filter === "nsfw" ? "nsfw" : filter;
 
-		await setDoc(doc(db, "saved", user.name), {
-			created_at: Timestamp.fromDate(new Date()),
-			saved: arrayUnion({ id: newId, filter: currentFilter }),
-		}, {
-			merge: true
-		});
-	}
+		await setDoc(
+			doc(db, "users", user.id),
+			{
+				last_updated: Timestamp.fromDate(new Date()),
+				username: user.name,
+			},
+			{
+				merge: true,
+			}
+		);
+
+		setFilterShareURL(true);
+		setRefetch(false);
+	};
 
 	const getSubreddits = () => {
 		const subreddits = saved.map((post: any) => {
@@ -229,11 +221,54 @@ export default function Callback() {
 		return nsfwPosts;
 	};
 
+	const CopyToClipboard = () => {
+		// const [copied, setCopied] = useState(false);
+
+		if (getFilteredPosts().length === 1) {
+			navigator.clipboard.writeText(
+				"https://www.reddit.com" + getFilteredPosts()[0].data.permalink
+			);
+		} else {
+			navigator.clipboard.writeText(
+				`http://localhost:3000/saves/${user.id}/${filter}`
+			);
+		}
+
+		setCopySuccess("Copied!");
+
+		setTimeout(() => {
+			setCopySuccess("");
+		}, 2000);
+
+		// setCopied(true);
+	};
+
+	const handleRefetch = () => {
+		setFilterShareURL(false);
+		createShare(getFilteredPosts());
+		// setRefetch(false);
+	};
+
+
+	const handleLogout = () => {
+		fetch("/api/logout", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({}),
+		}).then((res) => {
+			if (res.status === 200) {
+				window.location.href = "/";
+			}
+		});
+	};
+
 	return (
 		<>
 			{user ? (
 				<div className={Style.container}>
-					<Navbar user={user} handleShare={handleShare} filter={filter} />
+					{/* <Navbar user={user} handleShare={handleShare} filter={filter} /> */}
 
 					<Modal
 						isOpen={modalIsOpen}
@@ -257,6 +292,7 @@ export default function Callback() {
 					>
 						<div className={Style.modalContent}>
 							<div className={Style.header}>
+								{/* <h2>Sharing {filter} posts</h2> */}
 								<h2>Share</h2>
 								<div></div>
 								<button onClick={closeModal} className={Style.closeBtn}>
@@ -265,49 +301,132 @@ export default function Callback() {
 							</div>
 							<div className={Style.infoTop}>
 								<div className={Style.preview}>
+									{refetch && (
+										<button
+											onClick={handleRefetch}
+											className={Style.refetch}
+											id="refetch-button"
+											data-tooltip-content="
+								refetch my saves from reddit
+								"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="20"
+												height="20"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												strokeWidth="1.5"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											>
+												<path d="M22 12c0 6-4.39 10-9.806 10C7.792 22 4.24 19.665 3 16" />
+												<path d="M2 12C2 6 6.39 2 11.806 2 16.209 2 19.76 4.335 21 8" />
+												<path d="M7 17l-4-1-1 4" />
+												<path d="M17 7l4 1 1-4" />
+											</svg>
+										</button>
+									)}
+
 									<div className={Style.currentLink}>
 										<div className={Style.link}>
-											{`www.localhost:3000/saves/${user.name}/${filterShareID ? filterShareID : "..."
-												}`}
+											{filterShareURL
+												? `www.feedwise.vercel.app/saves/${user.id}/${filter}`
+												: getFilteredPosts().length === 1
+													? "https://www.reddit.com" +
+													getFilteredPosts()[0].data.permalink
+													: "Loading..."}
 										</div>
-										<button>Copy</button>
+										<button
+											onClick={CopyToClipboard}
+											style={{
+												backgroundColor: copySuccess && "rgb(5, 155, 5)",
+												color: copySuccess && "black",
+											}}
+											id="copy-button"
+											data-tooltip-content="Copy link to clipboard"
+										>
+											{copySuccess ? copySuccess : "Copy"}
+										</button>
+										<Tooltip
+											anchorId="copy-button"
+											content="hello world"
+											place="top"
+										/>
 									</div>
 								</div>
-								<span>
+								<Tooltip
+									anchorId="refetch-button"
+									content="hello world"
+									place="top"
+								/>
+								<span
+									style={{
+										color: "#a2a1a1",
+									}}
+								>
 									To share posts from a particular subreddit, select that
-									subreddit from the list. If you select &apos;All,&apos; all posts will
-									be shared.
-									<p>
-										If you select &apos;NSFW posts,&apos; only posts marked as NSFW will
-										be shared. These are posts that may contain explicit or
-										inappropriate content.
-									</p>
+									subreddit from the sidebar. If you select &apos;All,&apos; all
+									posts will be shared.
 								</span>
 							</div>
 						</div>
 					</Modal>
 
-					<main className={Style.dash}>
-						<div className={Style.content}>
-							<div className={Style.mainDash}>
-								<div className={Style.postsWrapper}>
-									<div className={Style.head}>
-										<span className={Style.title}>{filter} saves</span>
-										{/* <button>Share</button> */}
-									</div>
-									<AllPosts saved={getFilteredPosts()} loading={loading} />
-								</div>
+					<FilterBySub
+						getSubreddits={getSubreddits}
+						filter={filter}
+						setFilter={setFilter}
+						getNsfwPosts={getNsfwPosts}
+						saved={saved}
+						user={user}
+						handleLogout={handleLogout}
+					/>
 
-								<FilterBySub
-									getSubreddits={getSubreddits}
-									filter={filter}
-									setFilter={setFilter}
-									getNsfwPosts={getNsfwPosts}
-									saved={saved}
-								/>
+					<div className={Style.content}>
+						<div className={Style.mainDash}>
+							<div className={Style.postsWrapper}>
+								<div className={Style.head}>
+									<span className={Style.title}>{filter} saves</span>
+									{user && (
+										<button onClick={handleShare} className={Style.shareBtn}>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="20"
+												height="20"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												strokeWidth="1.5"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+
+											>
+												<circle cx="18" cy="5" r="3" />
+												<circle cx="18" cy="19" r="3" />
+												<circle cx="6" cy="12" r="3" />
+												<path d="M15.408 6.512l-6.814 3.975m6.814 7.001l-6.814-3.975" />
+											</svg>
+											<div>
+												Share{" "}
+												{filter === "all"
+													? "All"
+													: filter === "nsfw"
+														? "nsfw"
+														: `r/${filter}`}{" "}
+												Posts
+											</div>
+										</button>
+
+									)}
+								</div>
+								<AllPosts saved={getFilteredPosts()} loading={loading} />
 							</div>
+
+
 						</div>
-					</main>
+					</div>
 				</div>
 			) : (
 				<div>loading</div>

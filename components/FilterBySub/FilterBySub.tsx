@@ -6,16 +6,21 @@ export default function FilterBySub({
 	saved,
 	getNsfwPosts,
 	getSubreddits,
+	user,
+	handleLogout,
 }: {
 	filter: string;
 	setFilter: any;
 	saved: [];
 	getNsfwPosts: () => [];
 	getSubreddits: () => any;
+	user: any;
+	handleLogout: () => void;
 }) {
 	return (
 		<>
 			<div className={Style.filterSave}>
+				<div className={Style.logo}>FEEDWISE</div>
 				<div className={Style.subs}>
 					<div
 						className={Style.tag}
@@ -29,18 +34,18 @@ export default function FilterBySub({
 						<div className={Style.num}>{saved.length}</div>
 					</div>
 					{
-                        getNsfwPosts().length > 0 && <div
-                            className={Style.tag}
-                            style={{
-                                backgroundColor: filter === "nsfw" ? "#FF4500" : "#1a1a1a",
-                                color: filter === "nsfw" ? "#000000" : "#a2a1a1",
-                            }}
-                            onClick={() => setFilter("nsfw")}
-                        >
-                            NSFW
-                            <div className={Style.num}>{getNsfwPosts().length} </div>
-                        </div>
-                    }
+						getNsfwPosts().length > 0 && <div
+							className={Style.tag}
+							style={{
+								backgroundColor: filter === "nsfw" ? "#FF4500" : "#1a1a1a",
+								color: filter === "nsfw" ? "#000000" : "#a2a1a1",
+							}}
+							onClick={() => setFilter("nsfw")}
+						>
+							NSFW
+							<div className={Style.num}>{getNsfwPosts().length} </div>
+						</div>
+					}
 					<div
 						style={{
 							padding: "10px 0",
@@ -64,6 +69,21 @@ export default function FilterBySub({
 							</div>
 						);
 					})}
+				</div>
+				<div className={Style.profile}>
+					<div className={Style.content}>
+						<div className={Style.top}>
+
+							<img
+								className={Style.profileImg}
+								src={user.snoovatar_img}
+							/>
+							<div className={Style.name}>u/{user.name}</div>
+						</div>
+
+						<div><button onClick={handleLogout}>
+							Log out</button></div>
+					</div>
 				</div>
 			</div>
 		</>

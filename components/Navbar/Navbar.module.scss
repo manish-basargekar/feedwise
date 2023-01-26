@@ -1,11 +1,12 @@
 .navbar {
-    background-color: #0f0f0f;
+    // background-color: #0f0f0f;
     // border-bottom: 1px solid rgb(38, 38, 38);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 100;
-    background-color: rgba(0, 0, 0, 0.8);
+    // background-color: rgba(0, 0, 0, 0.8);
+    background-color: #0f0f0f;
     backdrop-filter: saturate(180%) blur(20px);
 
     .link {
@@ -15,33 +16,48 @@
     .logo {
         text-transform: uppercase;
         font-weight: 300;
+        font-family: "Roboto Mono", monospace;
 
         color: #eee;
+        @media screen and (max-width: 500px) {
+            // font-size: 4rem;
+            font-weight: 900;
+            display: none;
+        }
     }
 
-    .shareBtn {
-        // padding: .2rem 1rem;
-        height: fit-content;
-        cursor: pointer;
-    }
+
     .content {
         display: flex;
         justify-content: space-between;
         align-items: center;
         align-items: center;
 
-        padding: 0.5rem 0;
+        padding:.5rem 1rem;
 
-        max-width: 1200px;
+        max-width: 100%;
         margin: auto;
 
         // background-color: cyan;
 
+        @media screen and (max-width: 500px) {
+            flex-direction: column;
+        }
+        @media screen and (max-width: 1200px) {
+            padding: 0.5rem 1rem;
+        }
         .right {
             display: flex;
             gap: 0.6rem;
             // justify-content: center;
             align-items: center;
+            @media screen and (max-width: 500px) {
+                align-items: center;
+                justify-content: space-between;
+                // background-color: aqua;
+                width: 100%;
+                // padding: 0 1rem;
+            }
         }
 
         .userOptions {

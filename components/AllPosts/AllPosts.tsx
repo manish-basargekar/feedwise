@@ -48,7 +48,9 @@ export default function AllPosts(props: AllPostsProps) {
 					<Masonry
 						breakpointCols={
 							{
-								default: columns ? columns : 2,
+								default: columns ? columns : 3,
+								2000: 3,
+								1500: 2,
 								1100: 1,
 								700: 1,
 							} as any

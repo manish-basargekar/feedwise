@@ -46,6 +46,8 @@ export default function Callback() {
 
 	const [refetch, setRefetch] = useState(false);
 
+	const [isFetching, setIsFetching] = useState(false);
+
 	function openModal() {
 		setModalIsOpen(true);
 	}
@@ -90,6 +92,7 @@ export default function Callback() {
 	};
 
 	async function getSavedFromReddit(after: string) {
+		// setIsFetching(true);
 		await fetch(`api/getSaved?after=${after}`, {
 			method: "GET",
 			headers: {
@@ -100,7 +103,6 @@ export default function Callback() {
 				return res.json();
 			})
 			.then((data) => {
-				// console.log(data.data.children);
 				setSaved((prev: any) => [...prev, ...data.data.children]);
 
 				setLoading(false);
@@ -108,8 +110,11 @@ export default function Callback() {
 				// if (data.data.after) {
 				// 	console.log(data.data.after);
 				// 	getSavedFromReddit(data.data.after);
-
+				// 	setIsFetching(true);
+				// }else{
+				// 	setIsFetching(false);
 				// }
+
 			})
 			.catch((err) => {
 				console.log(err);
@@ -389,6 +394,26 @@ export default function Callback() {
 							<div className={Style.postsWrapper}>
 								<div className={Style.head}>
 									<span className={Style.title}>{filter} saves</span>
+									<div className={Style.right}>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="20"
+											height="20"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="1.5"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											className={
+												isFetching ? Style.rotate : Style.rotateOff
+											}
+										>
+											<path d="M22 12c0 6-4.39 10-9.806 10C7.792 22 4.24 19.665 3 16" />
+											<path d="M2 12C2 6 6.39 2 11.806 2 16.209 2 19.76 4.335 21 8" />
+											<path d="M7 17l-4-1-1 4" />
+											<path d="M17 7l4 1 1-4" />
+										</svg>
 									{user && (
 										<button onClick={handleShare} className={Style.shareBtn}>
 											<svg
@@ -420,8 +445,13 @@ export default function Callback() {
 										</button>
 
 									)}
+									</div>
 								</div>
 								<AllPosts saved={getFilteredPosts()} loading={loading} />
+								<div className={Style.load}>
+
+								<button>Load more</button>
+								</div>
 							</div>
 
 

@@ -76,11 +76,23 @@ export default function Home() {
 						<button className={Style.gotodashboard}>Go to Dashboard</button>
 					</Link>
 				) : (
-					<div className={Style.navLogin}>
+					<div className={`${Style.navLogin} ${Style["cta-login"]}`}>
 						<LoginButton openLogin={openLogin} />
 					</div>
 				)}
 			</main>
+			<div className={Style.screenshot}>
+				<img src="https://via.placeholder.com/1500x1000" alt="" />
+			</div>
+			<div className={Style.features}>
+				<div className={Style.feature}></div>
+				<div className={Style.feature}></div>
+				<div className={Style.feature}></div>
+				<div className={Style.feature}></div>
+			</div>
+			<footer>
+				
+			</footer>
 		</div>
 	);
 }

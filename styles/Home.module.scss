@@ -5,6 +5,14 @@
         padding: 0 1rem;
     }
 
+    .cta-login{
+        @media screen and (min-width: 500px) {
+            display: none;
+        
+            
+        }
+    }
+
     .gotodashboard {
         display: flex;
         justify-content: center;
@@ -35,7 +43,7 @@
     main {
         display: flex;
         flex-direction: column;
-        min-height: 60vh;
+        min-height: 45vh;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -77,5 +85,32 @@
         button {
             margin-top: 1rem;
         }
+    }
+
+    .screenshot{
+        img{
+
+            border-radius: 4px;
+        }
+    }
+
+    .features{
+        display: flex;
+        margin-top: 5rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        .feature{
+            width: 49%;
+            height: 30rem;
+            background-color: #0f0f0f;
+            border-radius: 1rem;
+        }
+    }
+
+    footer{
+        height: 4rem;
+        margin-top: 2rem;
+        border-top: 2px solid #ff4500;
     }
 }

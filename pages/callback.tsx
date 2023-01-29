@@ -36,8 +36,9 @@ export default function Callback({ user }: { user: any }) {
 
 // TODO: update REDIRECT_URI both in reddit API and here to localhost:3000 when testing locally
 // PROD: https://feedwise.vercel.app/callback
+// DEV: http://localhost:3000/callback
 
-const REDIRECT_URI = "https://feedwise.vercel.app/callback";
+const REDIRECT_URI = "http://localhost:3000/callback";
 const RANDOM_STRING = "savedbySavedit";
 const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;

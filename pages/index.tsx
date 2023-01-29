@@ -3,6 +3,8 @@ import Style from "../styles/Home.module.scss";
 import Link from "next/link";
 import LoginButton from "../components/UI/LoginButton/LoginButton";
 
+
+
 export default function Home() {
 	const [userExists, setUserExists] = useState(false);
 	const [URI, setURI] = useState("");
@@ -47,7 +49,9 @@ export default function Home() {
 		<div className={Style.container}>
 			<nav>
 				<Link href="/">
-					<div className={Style.logo}>Feedwise</div>
+					<div className={Style.logo}>
+						<img src="../feedwise.svg" alt="Feedwise logo" />
+					</div>
 				</Link>
 				{userExists ? (
 					<Link href="/dashboard">

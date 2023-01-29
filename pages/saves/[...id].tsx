@@ -10,7 +10,7 @@ import {
 import { db } from "../../Firebase.js";
 import AllPosts from "../../components/AllPosts/AllPosts";
 import Style from "../../styles/SavesPage.module.scss"
-import Navbar from "../../components/Navbar/Navbar";
+import Link from "next/link";
 
 export default function Saved() {
 	const router = useRouter();
@@ -51,7 +51,11 @@ export default function Saved() {
 
 	return (
 		<div className={Style.container}>
-			<Navbar />
+			<nav>
+				<Link href="/">
+					<h1>Feedwise</h1>
+				</Link>
+			</nav>
 			<div className={Style.content}>
 				{posts && <AllPosts saved={posts} loading={false} columns={1} />}
 			</div>

@@ -1,7 +1,7 @@
 import Style from "./AllPosts.module.scss";
 import Masonry from "react-masonry-css";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type AllPostsProps = {
 	saved: any;
@@ -11,6 +11,17 @@ type AllPostsProps = {
 
 export default function AllPosts(props: AllPostsProps) {
 	const { saved, loading, columns } = props;
+
+	const [columnConfig, setColumnConfig] = useState({
+		default: 5,
+		2600: 4,
+		2000: 3,
+		1500: 2,
+		1024: 2,
+		768: 2,
+		500: 1,
+	});
+
 
 	function timeSince(timestamp: number) {
 		// Calculate the time difference between the timestamp and the current time
@@ -35,8 +46,33 @@ export default function AllPosts(props: AllPostsProps) {
 	}
 
 	useEffect(() => {
-		console.log(saved);
-	}, [saved]);
+		const SharePageColumns = {
+			default: columns ? columns : 5,
+			2600: columns ? columns : 4,
+			2000: columns ? columns : 3,
+			1500: columns ? columns : 2,
+			1024: columns ? columns : 2,
+			768: columns ? columns : 2,
+			500: columns ? columns : 1,
+		} as any
+
+		const dashboardColumns = {
+			default: columns ? columns : 5,
+			2600: 4,
+			2000: 3,
+			1500: 2,
+			1024: 2,
+			768: 2,
+			500: 1,
+		} as any
+
+		if (window.location.pathname === "/dashboard") {
+			setColumnConfig(dashboardColumns);
+		} else {
+			setColumnConfig(SharePageColumns);
+		}
+
+	}, []);
 
 	return (
 		<>
@@ -46,15 +82,7 @@ export default function AllPosts(props: AllPostsProps) {
 				<div className={Style.postsContainer}>
 					<Masonry
 						breakpointCols={
-							{
-								default: columns ? columns : 5,
-								2600: 4,
-								2000: 3,
-								1500: 2,
-								1024: 2,
-								768: 2,
-								500: 1,
-							} as any
+							columnConfig
 						}
 						className="my-masonry-grid"
 						columnClassName="my-masonry-grid_column"
@@ -89,7 +117,7 @@ export default function AllPosts(props: AllPostsProps) {
 											)}
 											{post.data.is_video ? (
 												<video
-													
+
 													controls
 												>
 													<source

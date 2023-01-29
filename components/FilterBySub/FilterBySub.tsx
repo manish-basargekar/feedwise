@@ -88,8 +88,8 @@ export default function FilterBySub({
 					<div
 						className={Style.tag}
 						style={{
-							backgroundColor: filter === "all" ? "#FF4500" : "#1a1a1a",
-							color: filter === "all" ? "#000000" : "#a2a1a1",
+							backgroundColor: filter === "all" ? "#E04D01" : "#1a1a1a",
+							color: filter === "all" ? "#1e1e1e" : "#a2a1a1",
 						}}
 						onClick={() => {
 							setFilter("all")

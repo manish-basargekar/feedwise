@@ -295,18 +295,8 @@ export default function Callback() {
 							overlay: {
 								backgroundColor: "rgba(0, 0, 0, 0.661)",
 							},
-							content: {
-								backgroundColor: "rgb(24, 24, 24)",
-								color: "#e0e0e0",
-								border: "none",
-								width: "40rem",
-								height: "20rem",
-								margin: "auto",
-								borderRadius: "15px",
-								padding: "0",
-								animation: "slideIn 0.5s ease-in-out",
-							},
 						}}
+						className={Style.modal}
 					>
 						<div className={Style.modalContent}>
 							<div className={Style.header}>
@@ -344,6 +334,7 @@ export default function Callback() {
 												<path d="M7 17l-4-1-1 4" />
 												<path d="M17 7l4 1 1-4" />
 											</svg>
+											<span className={Style.refetchDesc}>Refetch</span>
 										</button>
 									)}
 
@@ -359,7 +350,7 @@ export default function Callback() {
 										<button
 											onClick={CopyToClipboard}
 											style={{
-												backgroundColor: copySuccess && "rgb(5, 155, 5)",
+												backgroundColor: copySuccess && "rgb(4, 235, 4)",
 												color: copySuccess && "black",
 											}}
 											id="copy-button"
@@ -424,7 +415,7 @@ export default function Callback() {
 						<h1 className={Style.logo}>FEEDWISE</h1>
 					</div>
 					<div className={Style.content} style={{
-						pointerEvents: isSidebarOpen ? "none" : "all",
+						pointerEvents: isSidebarOpen && window.innerWidth < 769 ? "none" : "auto"
 					}}>
 						<div className={Style.mainDash}>
 							<div className={Style.postsWrapper}>

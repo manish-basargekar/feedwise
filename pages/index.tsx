@@ -37,7 +37,7 @@ export default function Home() {
 			`https://www.reddit.com/api/v1/authorize?
 							client_id=${process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID}&response_type=code
 							&state=savedbySavedit
-							&redirect_uri=${URI}/callback
+							&redirect_uri=${URI}callback
 							&duration=permanent&scope=save,history,identity`,
 			"_self"
 		);

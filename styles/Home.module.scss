@@ -1,8 +1,17 @@
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    @media screen and (max-width: 1200px){
+    @media screen and (max-width: 1200px) {
         padding: 0 1rem;
+    }
+
+    .gotodashboard {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5rem 1rem;
+        background-color: #ff4500;
+        color: #000000;
     }
     nav {
         padding: 1rem 0;
@@ -10,53 +19,62 @@
         justify-content: space-between;
         align-items: center;
         //  background-color: #0f0f0f;
-        h1 {
+        .logo {
             color: #ffffff;
+            font-size: 1.5rem;
+            font-family: "Roboto Mono", monospace;
+        }
+
+        .navLogin {
+            @media screen and (max-width: 500px) {
+                display: none;
+            }
         }
     }
 
-    .loginReddit {
-        border-radius: 100px;
-        background-color: #ff4500;
-        color: #000000;
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-        font-weight: 500;
-    }
-
-    main{
+    main {
         display: flex;
         flex-direction: column;
         min-height: 60vh;
         justify-content: center;
         align-items: center;
         text-align: center;
-        h1{
+
+        @media screen and (max-width: 500px) {
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        h1 {
             font-size: 5.5rem;
             line-height: 1;
             font-weight: 900;
 
-            @media screen and (max-width: 1200px) and (min-width: 768px){
+            @media screen and (max-width: 1200px) and (min-width: 768px) {
                 font-size: 6vw;
             }
 
-            @media screen and (max-width: 768px){
-                font-size: 7vw;
+            @media screen and (max-width: 768px) {
+                font-size: 8vw;
                 line-height: normal;
             }
         }
-        
 
-        .description{
-            margin-top: 2rem;
+        .description {
+            margin-top: 1rem;
             color: #a2a1a1;
             // width: 50rem;
             font-size: 1.5rem;
+
+            @media screen and (max-width: 768px) {
+                font-size: 1rem;
+                margin-top: 0.4rem;
+            }
+
             // margin: auto;
         }
 
-        button{
+        button {
             margin-top: 1rem;
         }
     }

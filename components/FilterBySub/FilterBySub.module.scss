@@ -13,8 +13,26 @@
     width: 300px;
     min-height: 100vh;
     border-radius: 4px;
+    z-index: 1000;
+    transition: transform 0.2s ease-in-out;
     @media screen and (max-width: 768px) {
-        display: none;
+        margin-top: 0rem;
+        min-height: 100dvh;
+        bottom: 0;
+        //   box-shadow: -3px 0 115px 0 rgb(44, 44, 44);
+    }
+
+    .head {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        button {
+            @media screen and (min-width: 769px) {
+                display: none;
+            }
+        }
     }
 
     .logo {
@@ -23,14 +41,9 @@
         font-family: "Roboto Mono", monospace;
         font-size: 2rem;
         color: #eee;
-        padding-top: 1rem;
-        padding-bottom: 0.5rem;
+        // padding-top: 1rem;
+        // padding-bottom: 0.5rem;
         // border-bottom: 2px solid #1a1a1a;
-        @media screen and (max-width: 500px) {
-            // font-size: 4rem;
-            font-weight: 900;
-            display: none;
-        }
     }
 
     .shareBtn {
@@ -42,11 +55,11 @@
         // background-color: magenta;
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
         gap: 0.3rem;
         margin-top: 1rem;
-        // max-height: 100vh;
-        // overflow: scroll;
+        max-height: 100vh;
+        overflow: scroll;
 
         .num {
         }
@@ -80,7 +93,7 @@
         bottom: 0;
         width: calc(300px - 2rem);
         height: 8rem;
-          background-color: #0f0f0f;
+        background-color: #0f0f0f;
         // padding: 1rem;
         padding-top: 1rem;
         overflow: none;
@@ -89,20 +102,19 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items:stretch;
-            width:100%;
+            align-items: stretch;
+            width: 100%;
             height: 100%;
             padding-bottom: 1rem;
             // gap: .2rem;
-            
 
-            .top{
+            .top {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
             }
 
-            button{
+            button {
                 width: 100%;
             }
             img {
@@ -116,6 +128,5 @@
                 cursor: pointer;
             }
         }
-
     }
 }

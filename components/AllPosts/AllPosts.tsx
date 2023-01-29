@@ -44,15 +44,16 @@ export default function AllPosts(props: AllPostsProps) {
 				<div>loading</div>
 			) : (
 				<div className={Style.postsContainer}>
-					
 					<Masonry
 						breakpointCols={
 							{
-								default: columns ? columns : 3,
+								default: columns ? columns : 5,
+								2600: 4,
 								2000: 3,
 								1500: 2,
-								1100: 1,
-								700: 1,
+								1024: 2,
+								768: 2,
+								500: 1,
 							} as any
 						}
 						className="my-masonry-grid"
@@ -75,13 +76,6 @@ export default function AllPosts(props: AllPostsProps) {
 											•<span>{timeSince(post.data.created_utc)}</span>
 										</div>
 										<h3 className={Style.title}>{post.data.title}</h3>
-										{/* <div className={Style.tag}>
-											{post.data.over_18 ? (
-												<span className={Style.over18}>NSFW</span>
-											) : (
-												<span></span>
-											)}
-										</div> */}
 										<div
 											className={Style.content}
 											style={{
@@ -95,9 +89,13 @@ export default function AllPosts(props: AllPostsProps) {
 											)}
 											{post.data.is_video ? (
 												<video
-													src={post.data.media.reddit_video.fallback_url}
+													
 													controls
-												></video>
+												>
+													<source
+														src={post.data.media.reddit_video.fallback_url}
+													/>
+												</video>
 											) : (
 												<div></div>
 											)}

@@ -4,7 +4,7 @@ import Style from "../styles/Dashboard.module.scss";
 
 import React from "react";
 import { useRouter } from "next/router";
-import Navbar from "../components/Navbar/Navbar";
+// import Navbar from "../components/Navbar/Navbar";
 
 import Modal from "react-modal";
 
@@ -48,6 +48,8 @@ export default function Callback() {
 
 	const [isFetching, setIsFetching] = useState(false);
 
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
 	function openModal() {
 		setModalIsOpen(true);
 	}
@@ -87,6 +89,14 @@ export default function Callback() {
 	// 	console.log("savedd", saved);
 	// }, [saved]);
 
+	// open sidebar when window size is > 500px
+
+	useEffect(() => {
+		if (window.innerWidth > 768) {
+			setIsSidebarOpen(true);
+		}
+	}, []);
+
 	const getSubPosts = (sub: string) => {
 		return saved.filter((post: any) => post.data.subreddit === sub);
 	};
@@ -114,7 +124,6 @@ export default function Callback() {
 				// }else{
 				// 	setIsFetching(false);
 				// }
-
 			})
 			.catch((err) => {
 				console.log(err);
@@ -235,7 +244,7 @@ export default function Callback() {
 			);
 		} else {
 			navigator.clipboard.writeText(
-				`http://localhost:3000/saves/${user.id}/${filter}`
+				`${process.env.NEXT_PUBLIC_PROD_URL}saves/${user.id}/${filter}`
 			);
 		}
 
@@ -254,7 +263,6 @@ export default function Callback() {
 		// setRefetch(false);
 	};
 
-
 	const handleLogout = () => {
 		fetch("/api/logout", {
 			method: "POST",
@@ -268,6 +276,11 @@ export default function Callback() {
 			}
 		});
 	};
+
+
+	const handleSidebar = () => {
+		setIsSidebarOpen(!isSidebarOpen);
+	}
 
 	return (
 		<>
@@ -387,9 +400,32 @@ export default function Callback() {
 						saved={saved}
 						user={user}
 						handleLogout={handleLogout}
+						isSidebarOpen={isSidebarOpen}
+						setisSidebarOpen={setIsSidebarOpen}
 					/>
 
-					<div className={Style.content}>
+					<div className={Style.sidebarHead}>
+						<button onClick={handleSidebar}>
+
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="28"
+								height="28"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
+								<path d="M5 6h14M5 12h14M5 18h14" />
+							</svg>
+						</button>
+						<h1 className={Style.logo}>FEEDWISE</h1>
+					</div>
+					<div className={Style.content} style={{
+						pointerEvents: isSidebarOpen ? "none" : "all",
+					}}>
 						<div className={Style.mainDash}>
 							<div className={Style.postsWrapper}>
 								<div className={Style.head}>
@@ -405,56 +441,51 @@ export default function Callback() {
 											strokeWidth="1.5"
 											strokeLinecap="round"
 											strokeLinejoin="round"
-											className={
-												isFetching ? Style.rotate : Style.rotateOff
-											}
+											className={isFetching ? Style.rotate : Style.rotateOff}
 										>
 											<path d="M22 12c0 6-4.39 10-9.806 10C7.792 22 4.24 19.665 3 16" />
 											<path d="M2 12C2 6 6.39 2 11.806 2 16.209 2 19.76 4.335 21 8" />
 											<path d="M7 17l-4-1-1 4" />
 											<path d="M17 7l4 1 1-4" />
 										</svg>
-									{user && (
-										<button onClick={handleShare} className={Style.shareBtn}>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="20"
-												height="20"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												strokeWidth="1.5"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-
-											>
-												<circle cx="18" cy="5" r="3" />
-												<circle cx="18" cy="19" r="3" />
-												<circle cx="6" cy="12" r="3" />
-												<path d="M15.408 6.512l-6.814 3.975m6.814 7.001l-6.814-3.975" />
-											</svg>
-											<div>
-												Share{" "}
-												{filter === "all"
-													? "All"
-													: filter === "nsfw"
-														? "nsfw"
-														: `r/${filter}`}{" "}
-												Posts
-											</div>
-										</button>
-
-									)}
+										{user && (
+											<button onClick={handleShare} className={Style.shareBtn}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="20"
+													height="20"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="currentColor"
+													strokeWidth="1.5"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+												>
+													<circle cx="18" cy="5" r="3" />
+													<circle cx="18" cy="19" r="3" />
+													<circle cx="6" cy="12" r="3" />
+													<path d="M15.408 6.512l-6.814 3.975m6.814 7.001l-6.814-3.975" />
+												</svg>
+												<div>
+													Share{" "}
+													{filter === "all"
+														? "All"
+														: filter === "nsfw"
+															? "nsfw"
+															: `r/${filter}`}{" "}
+													Posts
+												</div>
+											</button>
+										)}
 									</div>
 								</div>
-								<AllPosts saved={getFilteredPosts()} loading={loading} />
-								<div className={Style.load}>
-
-								<button>Load more</button>
-								</div>
+								<AllPosts saved={getFilteredPosts()} loading={loading} columns={
+									isSidebarOpen ? 2 : 3
+								} />
+								{/* <div className={Style.load}>
+									<button>Load more</button>
+								</div> */}
 							</div>
-
-
 						</div>
 					</div>
 				</div>

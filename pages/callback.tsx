@@ -3,15 +3,28 @@ import axios from "axios";
 import querystring from "querystring";
 import { setCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Callback({ user }: { user: any }) {
 	const router = useRouter();
+
+	const [redirectURI, setRedirectURI] = useState("");
+
 
 	useEffect(() => {
 		if (user) {
 			router.push("/dashboard");
 		}
+
+		const env = process.env.NODE_ENV;
+
+		if (env === "development") {
+			setRedirectURI(process.env.NEXT_PUBLIC_DEV_URL as string);
+		} else if (env === "production") {
+			setRedirectURI(process.env.NEXT_PUBLIC_PROD_URL as string);
+		}
+
+
 	}, []);
 
 	return (
@@ -21,7 +34,9 @@ export default function Callback({ user }: { user: any }) {
 	);
 }
 
-const REDIRECT_URI = "http://localhost:3000/callback";
+// TODO: update REDIRECT_URI both in reddit API and here to localhost:3000 when testing locally
+
+const REDIRECT_URI = "https://feedwise.vercel.app/callback";
 const RANDOM_STRING = "savedbySavedit";
 const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;

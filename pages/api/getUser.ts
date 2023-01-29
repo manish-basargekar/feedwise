@@ -26,6 +26,11 @@ export default async function handler(
 	}) as string;
 	const refresh_token = getCookie("refresh_token");
 
+	if (!access_token) {
+		res.status(401).json({ message: "user is not logged in" });
+		return;
+	}
+
 	const user = await getUser(access_token);
 
 	// console.log(user);

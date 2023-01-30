@@ -19,6 +19,7 @@ import { db } from "../Firebase.js";
 
 import AllPosts from "../components/AllPosts/AllPosts";
 import FilterBySub from "../components/FilterBySub/FilterBySub";
+import Loading from "../components/UI/Loading/Loading";
 
 type user = {
 	name: string;
@@ -481,7 +482,7 @@ export default function Callback() {
 					</div>
 				</div>
 			) : (
-				<div>loading</div>
+				<Loading />
 			)}
 		</>
 	);

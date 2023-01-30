@@ -82,16 +82,51 @@ export default function Home() {
 				)}
 			</main>
 			<div className={Style.screenshot}>
-				<img src="https://via.placeholder.com/1500x1000" alt="" />
+				<img src="https://res.cloudinary.com/dcs9uuu5m/image/upload/v1675062323/Frame_20_fu3ufq.jpg" alt="" />
+			</div>
+			<div className={Style.tagline}>
+
+				<h3>A Dashboard  just for saved posts</h3>
 			</div>
 			<div className={Style.features}>
-				<div className={Style.feature}></div>
-				<div className={Style.feature}></div>
-				<div className={Style.feature}></div>
+				<div className={Style.featureContainer}>
+
+					<div className={Style.feature}>
+						<img src="../images/Filter-by-subreddit.png" alt="" />
+					</div>
+					<div className={Style.content}>
+						<h3>Filter by Subreddit</h3>
+						<p>Filter your saved posts by subreddit.</p>
+					</div>
+				</div>
+				<div className={Style.featureContainer}>
+
+				<div className={Style.feature}>
+					<img src="../images/masonry-layout.png" alt="" />
+				</div>
+					<div className={Style.content}>
+						<h3>Masonry layout</h3>
+						<p>
+							Organize your saved posts in a masonry layout.
+						</p>
+					</div>
+				</div>
+				<div className={Style.featureContainer}>
+					<div className={Style.feature}>
+						<img src="../images/share-postss.png" alt="" />
+					</div>
+					<div className={Style.content}>
+						<h3>Share All posts with a single link</h3>
+						<p>
+							Share all your saved posts with a single link.
+						</p>
+					</div>
+
+				</div>
 				<div className={Style.feature}></div>
 			</div>
 			<footer>
-				
+
 			</footer>
 		</div>
 	);

@@ -4,32 +4,33 @@ import querystring from "querystring";
 import { setCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Loading from "../components/UI/Loading/Loading";
 
 export default function Callback({ user }: { user: any }) {
 	const router = useRouter();
 
-	const [redirectURI, setRedirectURI] = useState("");
 
 
 	useEffect(() => {
 		if (user) {
 			router.push("/dashboard");
+		} else {
+			router.push("/");
 		}
 
-		const env = process.env.NODE_ENV;
-
-		if (env === "development") {
-			setRedirectURI(process.env.NEXT_PUBLIC_DEV_URL as string);
-		} else if (env === "production") {
-			setRedirectURI(process.env.NEXT_PUBLIC_PROD_URL as string);
-		}
 
 
 	}, []);
 
 	return (
-		<div>
-			<h1>Loading...</h1>
+		<div style={{
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			height: "100vh",
+			width: "100vw",
+		}}>
+			<Loading />
 		</div>
 	);
 }

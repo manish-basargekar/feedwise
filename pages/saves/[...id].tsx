@@ -11,6 +11,7 @@ import { db } from "../../Firebase.js";
 import AllPosts from "../../components/AllPosts/AllPosts";
 import Style from "../../styles/SavesPage.module.scss"
 import Link from "next/link";
+import Loading from "../../components/UI/Loading/Loading";
 
 export default function Saved() {
 	const router = useRouter();
@@ -57,7 +58,7 @@ export default function Saved() {
 				</Link>
 			</nav>
 			<div className={Style.content}>
-				{posts && <AllPosts saved={posts} loading={false} columns={1} />}
+				{posts.length > 0 ? <AllPosts saved={posts} loading={false} columns={1} /> : <Loading/>}
 			</div>
 		</div>
 	);

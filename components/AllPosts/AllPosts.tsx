@@ -2,6 +2,7 @@ import Style from "./AllPosts.module.scss";
 import Masonry from "react-masonry-css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Loading from "../UI/Loading/Loading";
 
 type AllPostsProps = {
 	saved: any;
@@ -77,7 +78,10 @@ export default function AllPosts(props: AllPostsProps) {
 	return (
 		<>
 			{loading ? (
-				<div>loading</div>
+				<div className={Style.loadingContainer}>
+
+					<Loading />
+				</div>
 			) : (
 				<div className={Style.postsContainer}>
 					<Masonry
@@ -166,7 +170,7 @@ export default function AllPosts(props: AllPostsProps) {
 												</svg>
 												<span>{post.data.ups}</span>
 											</div>
-											<div className="save">
+											<div className={Style.save}>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													width="20"

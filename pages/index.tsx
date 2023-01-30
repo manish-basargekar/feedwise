@@ -82,12 +82,9 @@ export default function Home() {
 				)}
 			</main>
 			<div className={Style.screenshot}>
-				<img src="https://res.cloudinary.com/dcs9uuu5m/image/upload/v1675062323/Frame_20_fu3ufq.jpg" alt="" />
+				<img src="../images/dashboard_screenshot.jpg" alt="feedwise dashboard screenshot" />
 			</div>
-			<div className={Style.tagline}>
-
-				<h3>A Dashboard  just for saved posts</h3>
-			</div>
+			
 			<div className={Style.features}>
 				<div className={Style.featureContainer}>
 
@@ -125,7 +122,32 @@ export default function Home() {
 				</div>
 				<div className={Style.feature}></div>
 			</div>
+
+			<div className={Style.tagline}>
+
+				<h3>A Dashboard  just for saved posts</h3>
+				<div className={Style.desc}>
+					<p>
+						Feedwise is a simple dashboard to manage and share your saved posts from Reddit. 
+						You can filter your saved posts by subreddit, organize them in a masonry layout and share all your saved posts with a single link. 
+					</p>
+					
+				</div>
+				<LoginButton openLogin={openLogin} />
+			</div>
 			<footer>
+					<div className="left">
+					Enjoy the rest of your{" "}
+					{new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(
+						new Date()
+					)}
+					!
+					</div>
+					<div className="right">
+						Made by <a href="https://twitter.com/oimanish" 
+						target="_blank" rel="noopener noreferrer"
+						>Manish</a>
+					</div>
 
 			</footer>
 		</div>

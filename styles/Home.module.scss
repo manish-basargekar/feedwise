@@ -5,11 +5,9 @@
         padding: 0 1rem;
     }
 
-    .cta-login{
+    .cta-login {
         @media screen and (min-width: 500px) {
             display: none;
-        
-            
         }
     }
 
@@ -17,7 +15,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
         background-color: #ff4500;
         color: #000000;
     }
@@ -87,49 +85,80 @@
         }
     }
 
-    .screenshot{
-        img{
-
+    .screenshot {
+        img {
             border-radius: 4px;
+
+            @media screen and (max-width: 500px) {
+                display: none;
+            }
         }
     }
 
-    .tagline{
+    .tagline {
         margin-top: 4rem;
-        h3{
-            font-size:4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        padding: 6rem 4rem;
+        background: radial-gradient(156.94% 156.94% at 50% 156.94%, #ffedbc 0%, #ff4500 100%);
+        border-radius: 4px;
+        color: #380f00;
+
+        @media screen and (max-width: 768px) {
+            padding: 2rem;
+        }
+
+        h3 {
+            font-size: 4rem;
             text-align: center;
             line-height: 1;
             font-weight: 900;
+            @media screen and (max-width: 768px) {
+                font-size: 2rem;
+            }
+        }
+        .desc {
+            margin-top: 0rem;
         }
     }
 
-    .features{
+    .features {
         display: flex;
         margin-top: 10rem;
         gap: 5rem;
         flex-wrap: wrap;
         flex-direction: column;
 
-        .featureContainer{
+        .featureContainer {
             width: 100%;
             display: flex;
             gap: 3rem;
 
-            .content{
+            @media screen and (max-width: 768px) {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .content {
                 flex: 1;
-                h3{
+                h3 {
                     font-size: 4rem;
                     line-height: 1;
                     font-weight: 900;
+                    @media screen and (max-width: 768px) {
+                        font-size: 3rem;
+                    }
                 }
-                p{
+                p {
                     margin-top: 1rem;
                 }
             }
         }
 
-        .feature{
+        .feature {
             width: 49%;
             // height: 40rem;
             background-color: #0f0f0f;
@@ -139,22 +168,28 @@
             @media screen and (max-width: 768px) {
                 width: 100%;
                 margin-bottom: 2rem;
-            
-                
             }
 
-            img{
+            img {
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
-                border-radius: 1rem;
+                border-radius: 4px;
             }
         }
     }
 
-    footer{
+    footer {
         height: 4rem;
         margin-top: 2rem;
-        border-top: 2px solid #0f0f0f;
+        border-top: 2px solid #2a2a2a;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #a2a1a1;
+
+        a{
+            color:#ff4500;
+        }
     }
 }

@@ -257,7 +257,7 @@ export default function AllPosts(props: AllPostsProps) {
 						displayPosts.length >= saved.length ? (
 								<div className={Style.loadMore}>
 
-									That's all folks
+									That{"'"}s all folks
 								</div>
 						) : (
 							<div className={Style.loadMore}>

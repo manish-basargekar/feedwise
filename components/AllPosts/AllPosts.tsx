@@ -263,7 +263,10 @@ export default function AllPosts(props: AllPostsProps) {
 						) : (
 
 							isFetching ? <div className={Style.loadMore}>
-								"Fetching all of your saved posts from reddit..."
+								<span>
+
+								Fetching all of your saved posts from reddit...
+								</span>
 							</div> : <div className={Style.loadMore}>
 
 								<button onClick={handleLoadMore}>Load More</button>

@@ -1,92 +1,5 @@
-.filterSave {
-    // flex: 1;
-    width: 100%;
-    max-height: 90vh;
-    background-color: #0f0f0f;
-    padding: 1rem;
-    padding-top: 0;
-    overflow: scroll;
-    position: fixed;
-    left: 0;
-    // margin-right: 300px;
-    top: 0;
-    width: 300px;
-    min-height: 100vh;
-    border-radius: 4px;
-    z-index: 1000;
-    transition: transform 0.2s ease-in-out;
-    @media screen and (max-width: 768px) {
-        margin-top: 0rem;
-        min-height: 100dvh;
-        bottom: 0;
-        //   box-shadow: -3px 0 115px 0 rgb(44, 44, 44);
-    }
-
-    .head {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-top: 1rem;
-
-        button {
-            @media screen and (min-width: 769px) {
-                display: none;
-            }
-        }
-    }
-
-    .logo {
-        text-transform: uppercase;
-        font-weight: 300;
-        font-family: "Roboto Mono", monospace;
-        font-size: 2rem;
-        color: #eee;
-        // padding-top: 1rem;
-        // padding-bottom: 0.5rem;
-        // border-bottom: 2px solid #1a1a1a;
-    }
-
-    .shareBtn {
-        width: 100%;
-    }
-
-    .subs {
-        flex: 2;
-        // background-color: magenta;
-        display: flex;
-        flex-direction: column;
-        // flex-wrap: wrap;
-        gap: 0.3rem;
-        margin-top: 1rem;
-        max-height: 100vh;
-        overflow: scroll;
-
-        .num {
-        }
-
-        .tag {
-            font-size: 0.9rem;
-            padding: 0.4rem 0.7rem;
-            border-radius: 2px;
-            background-color: #1a1a1a;
-            color: #a2a1a1;
-            cursor: pointer;
-
-            display: flex;
-            justify-content: space-between;
-            font-weight: 400;
-
-            .num {
-                // font-family: monospace;
-            }
-
-            &:hover {
-                background-color: #ff4500;
-                color: #0f0f0f;
-                transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            }
-        }
-    }
+.container {
+    position: relative;
 
     .profile {
         position: fixed;
@@ -126,6 +39,141 @@
                 height: 40px;
                 object-fit: cover;
                 cursor: pointer;
+            }
+        }
+    }
+}
+
+.filterSave {
+    // flex: 1;
+    width: 100%;
+    max-height: 90vh;
+    background-color: #0f0f0f;
+   
+    padding: 1rem;
+    padding-top: 0;
+    overflow: scroll;
+    position: fixed;
+    left: 0;
+    // margin-right: 300px;
+    top: 0;
+    width: 300px;
+    min-height: calc(100vh);
+    border-radius: 4px;
+    z-index: 1000;
+    transition: transform 0.2s ease-in-out;
+    @media screen and (max-width: 768px) {
+        margin-top: 0rem;
+        min-height: 100dvh;
+        bottom: 0;
+        //   box-shadow: -3px 0 115px 0 rgb(44, 44, 44);
+    }
+
+    //        .profile {
+    //     position: fixed;
+    //     bottom: 0;
+    //     width: calc(300px - 2rem);
+    //     height: 8rem;
+    //     background-color: #0f0f0f;
+    //     // padding: 1rem;
+    //     padding-top: 1rem;
+    //     overflow: none;
+    //     border-top: 2px solid #1a1a1a;
+    //     .content {
+    //         display: flex;
+    //         flex-direction: column;
+    //         justify-content: space-between;
+    //         align-items: stretch;
+    //         width: 100%;
+    //         height: 100%;
+    //         padding-bottom: 1rem;
+    //         // gap: .2rem;
+
+    //         .top {
+    //             display: flex;
+    //             align-items: center;
+    //             gap: 0.5rem;
+    //         }
+
+    //         button {
+    //             width: 100%;
+    //         }
+    //         img {
+    //             width: 40px;
+    //             border-radius: 100%;
+    //             border: 2px solid #eee;
+    //             padding: 0.1rem;
+    //             background-color: #eee;
+    //             height: 40px;
+    //             object-fit: cover;
+    //             cursor: pointer;
+    //         }
+    //     }
+    // }
+
+    .head {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        button {
+            @media screen and (min-width: 769px) {
+                display: none;
+            }
+        }
+    }
+
+    .logo {
+        text-transform: uppercase;
+        font-weight: 300;
+        font-family: "Roboto Mono", monospace;
+        font-size: 2rem;
+        color: #eee;
+        // padding-top: 1rem;
+        // padding-bottom: 0.5rem;
+        // border-bottom: 2px solid #1a1a1a;
+    }
+
+    .shareBtn {
+        width: 100%;
+    }
+
+    .subs {
+        flex: 2;
+        // background-color: magenta;
+        display: flex;
+        flex-direction: column;
+        // flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        max-height: 75vh;
+        overflow: scroll;
+
+        .num {
+        }
+
+        .tag {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.7rem;
+            border-radius: 2px;
+            background-color: #1a1a1a;
+            color: #a2a1a1;
+            cursor: pointer;
+
+            display: flex;
+            justify-content: space-between;
+            font-weight: 400;
+
+            .num {
+                // font-family: monospace;
+            }
+
+            &:hover {
+                background-color: #ff4500;
+                color: #0f0f0f;
+                transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
             }
         }
     }

@@ -30,7 +30,7 @@ export default function FilterBySub({
 
 	useEffect(() => {
 
-		if( window.innerWidth >= 769 ) return
+		if (window.innerWidth >= 769) return
 
 		const handleClickOutside = (event: any) => {
 			if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -49,14 +49,14 @@ export default function FilterBySub({
 
 
 	const handleSidebar = () => {
-		if( window.innerWidth >= 769 ) return
+		if (window.innerWidth >= 769) return
 		setisSidebarOpen(!isSidebarOpen)
 	}
 
 
 
 	return (
-		<>
+		<div className={Style.container}>
 			<div
 				className={Style.filterSave}
 				style={{
@@ -85,7 +85,7 @@ export default function FilterBySub({
 					<div className={Style.logo}>FEEDWISE</div>
 				</div>
 				<div className={Style.subs}>
-					<div
+					<a
 						className={Style.tag}
 						style={{
 							backgroundColor: filter === "all" ? "#E04D01" : "#1a1a1a",
@@ -95,17 +95,19 @@ export default function FilterBySub({
 							setFilter("all")
 							handleSidebar()
 						}}
+						href="#top"
 					>
 						All
 						<div className={Style.num}>{saved.length}</div>
-					</div>
+					</a>
 					{getNsfwPosts().length > 0 && (
-						<div
+						<a
 							className={Style.tag}
 							style={{
 								backgroundColor: filter === "nsfw" ? "#FF4500" : "#1a1a1a",
 								color: filter === "nsfw" ? "#000000" : "#a2a1a1",
 							}}
+							href="#top"
 							onClick={() => {
 								setFilter("nsfw")
 								handleSidebar()
@@ -113,7 +115,7 @@ export default function FilterBySub({
 						>
 							NSFW
 							<div className={Style.num}>{getNsfwPosts().length} </div>
-						</div>
+						</a>
 					)}
 					<div
 						style={{
@@ -124,13 +126,14 @@ export default function FilterBySub({
 					</div>
 					{getSubreddits().map((sub: any) => {
 						return (
-							<div
+							<a
 								key={sub.subreddit}
 								className={Style.tag}
 								style={{
 									backgroundColor: filter === sub.subreddit ? "#FF4500" : "",
 									color: filter === sub.subreddit ? "#000000" : "",
 								}}
+								href="#top"
 								onClick={() => {
 									setFilter(sub.subreddit)
 									handleSidebar()
@@ -138,7 +141,7 @@ export default function FilterBySub({
 							>
 								r/{sub.subreddit}
 								<div className={Style.num}>{sub.count}</div>
-							</div>
+							</a>
 						);
 					})}
 				</div>
@@ -155,6 +158,6 @@ export default function FilterBySub({
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

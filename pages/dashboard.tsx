@@ -281,6 +281,10 @@ export default function Callback() {
 
 	const handleSidebar = () => {
 		setIsSidebarOpen(!isSidebarOpen);
+		// jump to top
+
+		
+		
 	}
 
 	return (
@@ -288,6 +292,12 @@ export default function Callback() {
 			{user ? (
 				<div className={Style.container}>
 					{/* <Navbar user={user} handleShare={handleShare} filter={filter} /> */}
+					<div className="top"
+						id="top"
+					style={{
+						height: "1rem",
+						// backgroundColor: "#ff0e0e",
+					}}></div>
 
 					<Modal
 						isOpen={modalIsOpen}
@@ -477,7 +487,7 @@ export default function Callback() {
 								<AllPosts saved={getFilteredPosts()} loading={loading} columns={
 									isSidebarOpen ? 2 : 3
 								}
-									filter={filter}
+								isFetching={isFetching}
 								/>
 								{/* <div className={Style.load}>
 									<button>Load more</button>

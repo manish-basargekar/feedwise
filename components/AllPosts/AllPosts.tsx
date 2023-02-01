@@ -8,11 +8,12 @@ type AllPostsProps = {
 	saved: any;
 	loading: boolean;
 	columns?: number;
-	filter?: string;
+	isFetching?: boolean;
+
 };
 
 export default function AllPosts(props: AllPostsProps) {
-	const { saved, loading, columns, filter } = props;
+	const { saved, loading, columns, isFetching } = props;
 
 	const [columnConfig, setColumnConfig] = useState({
 		default: 5,
@@ -101,7 +102,7 @@ export default function AllPosts(props: AllPostsProps) {
 	}, []);
 
 	useEffect(() => {
-		if(!displayPosts) return
+		if (!displayPosts) return
 		// console.log(displayPosts.length)
 	}, [displayPosts])
 
@@ -111,7 +112,7 @@ export default function AllPosts(props: AllPostsProps) {
 	const handleLoadMore = () => {
 
 		console.log("====================================")
-		console.log("currentPage =>",currentPage)
+		console.log("currentPage =>", currentPage)
 		console.log("displayPosts.length =>", displayPosts.length)
 		console.log("saved.length =>", saved.length)
 		console.log(posts[currentPage])
@@ -148,7 +149,7 @@ export default function AllPosts(props: AllPostsProps) {
 						breakpointCols={
 							columnConfig
 						}
-						className="my-masonry-grid"
+						className={Style["my-masonry-grid"]}
 						columnClassName="my-masonry-grid_column"
 					>
 						{displayPosts.map((post: any) => {
@@ -255,12 +256,15 @@ export default function AllPosts(props: AllPostsProps) {
 						// show load more button only if there are more posts to load
 
 						displayPosts.length >= saved.length ? (
-								<div className={Style.loadMore}>
-
-									That{"'"}s all folks
-								</div>
-						) : (
 							<div className={Style.loadMore}>
+
+								That{"'"}s all folks
+							</div>
+						) : (
+
+							isFetching ? <div className={Style.loadMore}>
+								"Fetching all of your saved posts from reddit..."
+							</div> : <div className={Style.loadMore}>
 
 								<button onClick={handleLoadMore}>Load More</button>
 							</div>

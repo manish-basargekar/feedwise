@@ -97,7 +97,6 @@ export default function AllPosts(props: AllPostsProps) {
 			setColumnConfig(SharePageColumns);
 		}
 
-		console.log((posts.length) * 50)
 
 	}, []);
 
@@ -120,10 +119,10 @@ export default function AllPosts(props: AllPostsProps) {
 
 		if (displayPosts.length >= saved.length) return;
 
-		setCurrentPage(currentPage + 1);
+		// setCurrentPage(currentPage + 1);
 		// console.log(posts)
 
-		setDisplayPosts([...displayPosts, ...posts[currentPage]])
+		setDisplayPosts([...displayPosts, ...posts[currentPage + 1]])
 
 		// console.log(posts[currentPage])
 
@@ -258,7 +257,7 @@ export default function AllPosts(props: AllPostsProps) {
 						displayPosts.length >= saved.length ? (
 								<div className={Style.loadMore}>
 
-									Thats all folks
+									That's all folks
 								</div>
 						) : (
 							<div className={Style.loadMore}>

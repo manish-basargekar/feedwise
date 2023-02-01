@@ -118,13 +118,13 @@ export default function Callback() {
 
 				setLoading(false);
 
-				// if (data.data.after) {
-				// 	console.log(data.data.after);
-				// 	getSavedFromReddit(data.data.after);
-				// 	setIsFetching(true);
-				// }else{
-				// 	setIsFetching(false);
-				// }
+				if (data.data.after) {
+					console.log(data.data.after);
+					getSavedFromReddit(data.data.after);
+					setIsFetching(true);
+				}else{
+					setIsFetching(false);
+				}
 			})
 			.catch((err) => {
 				console.log(err);
@@ -441,7 +441,7 @@ export default function Callback() {
 											<path d="M17 7l4 1 1-4" />
 										</svg>
 										{user && (
-											<button onClick={handleShare} className={Style.shareBtn}>
+											isFetching ? "Fetching..." : <button onClick={handleShare} className={Style.shareBtn}>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													width="20"
@@ -458,6 +458,8 @@ export default function Callback() {
 													<circle cx="6" cy="12" r="3" />
 													<path d="M15.408 6.512l-6.814 3.975m6.814 7.001l-6.814-3.975" />
 												</svg>
+
+
 												<div>
 													Share{" "}
 													{filter === "all"
@@ -467,13 +469,16 @@ export default function Callback() {
 															: `r/${filter}`}{" "}
 													Posts
 												</div>
+
 											</button>
 										)}
 									</div>
 								</div>
 								<AllPosts saved={getFilteredPosts()} loading={loading} columns={
 									isSidebarOpen ? 2 : 3
-								} />
+								}
+									filter={filter}
+								/>
 								{/* <div className={Style.load}>
 									<button>Load more</button>
 								</div> */}

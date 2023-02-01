@@ -35,11 +35,7 @@ export default async function handler(
 	// 	}
 	// );
 
-
-
-
-
-	console.log(after)
+	console.log(after);
 
 	const data = await fetch(
 		`https://oauth.reddit.com/user/${username}/saved?after=${after}&limit=100`, //TODO limit 100
@@ -50,8 +46,6 @@ export default async function handler(
 			},
 		}
 	);
-
-
 
 	res.status(200).json(await data.json());
 }

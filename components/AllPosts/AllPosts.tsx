@@ -8,10 +8,11 @@ type AllPostsProps = {
 	saved: any;
 	loading: boolean;
 	columns?: number;
+	filter?: string;
 };
 
 export default function AllPosts(props: AllPostsProps) {
-	const { saved, loading, columns } = props;
+	const { saved, loading, columns, filter } = props;
 
 	const [columnConfig, setColumnConfig] = useState({
 		default: 5,
@@ -22,6 +23,12 @@ export default function AllPosts(props: AllPostsProps) {
 		768: 2,
 		500: 1,
 	});
+
+
+	const [posts, setPosts] = useState<any>([]);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const [displayPosts, setDisplayPosts] = useState<any>([]);
 
 
 	function timeSince(timestamp: number) {
@@ -45,6 +52,23 @@ export default function AllPosts(props: AllPostsProps) {
 			return seconds + " seconds ago";
 		}
 	}
+
+
+	useEffect(() => {
+		if (!saved) return;
+		const pages = [];
+		for (let i = 0; i < saved.length; i += 50) {
+			pages.push(saved.slice(i, i + 50));
+		}
+		// console.log(pages)
+		setPosts(pages);
+		setDisplayPosts(pages[0]);
+		setCurrentPage(0);
+		// console.log("====================================")
+		// console.log(pages)
+		// console.log("displayPosts =>", displayPosts.length)
+		// console.log("savedlength =>", saved.length)
+	}, [saved]);
 
 	useEffect(() => {
 		const SharePageColumns = {
@@ -73,11 +97,48 @@ export default function AllPosts(props: AllPostsProps) {
 			setColumnConfig(SharePageColumns);
 		}
 
+		console.log((posts.length) * 50)
+
 	}, []);
+
+	useEffect(() => {
+		if(!displayPosts) return
+		// console.log(displayPosts.length)
+	}, [displayPosts])
+
+
+
+
+	const handleLoadMore = () => {
+
+		console.log("====================================")
+		console.log("currentPage =>",currentPage)
+		console.log("displayPosts.length =>", displayPosts.length)
+		console.log("saved.length =>", saved.length)
+		console.log(posts[currentPage])
+
+
+		if (displayPosts.length >= saved.length) return;
+
+		setCurrentPage(currentPage + 1);
+		// console.log(posts)
+
+		setDisplayPosts([...displayPosts, ...posts[currentPage]])
+
+		// console.log(posts[currentPage])
+
+		// console.log("displayPosts =>",displayPosts.length)
+		// console.log("saved =>",saved.length)
+	};
+
+	// useEffect(() => {
+	// 	window.addEventListener("scroll", handleScroll);
+	// 	return () => window.removeEventListener("scroll", handleScroll);
+	// }, [currentPage]);
 
 	return (
 		<>
-			{loading ? (
+			{loading || !displayPosts ? (
 				<div className={Style.loadingContainer}>
 
 					<Loading />
@@ -91,7 +152,7 @@ export default function AllPosts(props: AllPostsProps) {
 						className="my-masonry-grid"
 						columnClassName="my-masonry-grid_column"
 					>
-						{saved.map((post: any) => {
+						{displayPosts.map((post: any) => {
 							return (
 								<a
 									href={"https://www.reddit.com" + post.data.permalink}
@@ -191,6 +252,23 @@ export default function AllPosts(props: AllPostsProps) {
 							);
 						})}
 					</Masonry>
+					{
+						// show load more button only if there are more posts to load
+
+						displayPosts.length >= saved.length ? (
+								<div className={Style.loadMore}>
+
+									Thats all folks
+								</div>
+						) : (
+							<div className={Style.loadMore}>
+
+								<button onClick={handleLoadMore}>Load More</button>
+							</div>
+						)
+
+					}
+
 				</div>
 			)}
 		</>

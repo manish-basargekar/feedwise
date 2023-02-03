@@ -108,13 +108,13 @@ export default function Callback() {
 
 				setLoading(false);
 
-				// if (data.data.after) {
-				// 	console.log(data.data.after);
-				// 	getSavedFromReddit(data.data.after);
-				// 	setIsFetching(true);
-				// }else{
-				// 	setIsFetching(false);
-				// }
+				if (data.data.after) {
+					console.log(data.data.after);
+					getSavedFromReddit(data.data.after);
+					setIsFetching(true);
+				}else{
+					setIsFetching(false);
+				}
 			})
 			.catch((err) => {
 				console.log(err);

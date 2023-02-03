@@ -104,7 +104,7 @@ export default function Home() {
 					<div className={Style.content}>
 						<h3>Masonry layout</h3>
 						<p>
-							Organize your saved posts in a masonry layout.
+							All your saved posts in a masonry layout.
 						</p>
 					</div>
 				</div>
@@ -114,9 +114,9 @@ export default function Home() {
 					</div>
 					<div className={Style.content}>
 						<h3>Share All posts with a single link</h3>
-						<p>
+						{/* <p>
 							Share all your saved posts with a single link.
-						</p>
+						</p> */}
 					</div>
 
 				</div>
@@ -137,11 +137,7 @@ export default function Home() {
 			</div>
 			<footer>
 					<div className="left">
-					Enjoy the rest of your{" "}
-					{new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(
-						new Date()
-					)}
-					!
+					© 2023 Feedwise
 					</div>
 					<div className="right">
 						Made by <a href="https://twitter.com/oimanish" 

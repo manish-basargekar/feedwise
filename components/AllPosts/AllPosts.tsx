@@ -149,7 +149,7 @@ export default function AllPosts(props: AllPostsProps) {
 						breakpointCols={
 							columnConfig
 						}
-						className={Style["my-masonry-grid"]}
+						className="my-masonry-grid"
 						columnClassName="my-masonry-grid_column"
 					>
 						{displayPosts.map((post: any) => {

@@ -39,7 +39,7 @@ export default function Callback({ user }: { user: any }) {
 // PROD: https://feedwise.vercel.app/callback
 // DEV: http://localhost:3000/callback
 
-const REDIRECT_URI = "https://feedwise.vercel.app/callback";
+const REDIRECT_URI = "http://localhost:3000/callback";
 const RANDOM_STRING = "savedbySavedit";
 const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;

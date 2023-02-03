@@ -1,5 +1,6 @@
 import Style from "./FilterBySub.module.scss";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 export default function FilterBySub({
 	filter,
@@ -82,7 +83,11 @@ export default function FilterBySub({
 						</svg>
 					</button>
 
-					<div className={Style.logo}>FEEDWISE</div>
+					<Link href="/">
+						<div className={Style.logo}>
+							<img src="../feedwise.svg" alt="Feedwise logo" />
+						</div>
+					</Link>
 				</div>
 				<div className={Style.subs}>
 					<a

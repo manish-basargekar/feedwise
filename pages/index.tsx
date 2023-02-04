@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Style from "../styles/Home.module.scss";
 import Link from "next/link";
 import LoginButton from "../components/UI/LoginButton/LoginButton";
+import Image from "next/image";
 
 
 
@@ -82,14 +83,14 @@ export default function Home() {
 				)}
 			</main>
 			<div className={Style.screenshot}>
-				<img src="../images/dashboard_screenshot.jpg" alt="feedwise dashboard screenshot" />
+				<img src="https://res.cloudinary.com/dcs9uuu5m/image/upload/q_50/v1675062323/Frame_20_fu3ufq.jpg" />
 			</div>
-			
+
 			<div className={Style.features}>
 				<div className={Style.featureContainer}>
 
 					<div className={Style.feature}>
-						<img src="../images/Filter-by-subreddit.png" alt="" />
+						<img src="https://res.cloudinary.com/dcs9uuu5m/image/upload/c_scale,h_529,q_30/v1675508429/Filter_by_subreddit_rkxmir.png" alt="Filter by subreddit" />
 					</div>
 					<div className={Style.content}>
 						<h3>Filter by Subreddit</h3>
@@ -98,9 +99,9 @@ export default function Home() {
 				</div>
 				<div className={Style.featureContainer}>
 
-				<div className={Style.feature}>
-					<img src="../images/masonry-layout.png" alt="" />
-				</div>
+					<div className={Style.feature}>
+						<img src="https://res.cloudinary.com/dcs9uuu5m/image/upload/c_scale,h_529,q_42/v1675508429/masonry-layout_b2q2wr.png" alt="Masonry layout" />
+					</div>
 					<div className={Style.content}>
 						<h3>Masonry layout</h3>
 						<p>
@@ -110,7 +111,7 @@ export default function Home() {
 				</div>
 				<div className={Style.featureContainer}>
 					<div className={Style.feature}>
-						<img src="../images/share-postss.png" alt="" />
+						<img src="https://res.cloudinary.com/dcs9uuu5m/image/upload/c_scale,h_529,q_46/v1675508429/Share_all_post_by_subreddit_aleejt.png" alt="Share All posts with a single link" />
 					</div>
 					<div className={Style.content}>
 						<h3>Share All posts with a single link</h3>
@@ -128,22 +129,22 @@ export default function Home() {
 				<h3>A Dashboard  just for saved posts</h3>
 				<div className={Style.desc}>
 					<p>
-						Feedwise is a simple dashboard to manage and share your saved posts from Reddit. 
-						You can filter your saved posts by subreddit, organize them in a masonry layout and share all your saved posts with a single link. 
+						Feedwise is a simple dashboard to manage and share your saved posts from Reddit.
+						You can filter your saved posts by subreddit, organize them in a masonry layout and share all your saved posts with a single link.
 					</p>
-					
+
 				</div>
 				<LoginButton openLogin={openLogin} />
 			</div>
 			<footer>
-					<div className="left">
+				<div className="left">
 					© 2023 Feedwise
-					</div>
-					<div className="right">
-						Made by <a href="https://mnsh.me" 
+				</div>
+				<div className="right">
+					Made by <a href="https://mnsh.me"
 						target="_blank" rel="noopener noreferrer"
-						>Manish</a>
-					</div>
+					>Manish</a>
+				</div>
 
 			</footer>
 		</div>

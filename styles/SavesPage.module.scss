@@ -8,11 +8,24 @@
         margin-top: 1rem;
     }
 
+
+    .loadingContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // height: 100vh;
+    }
+
+
+
     nav{
         width: 100%;
         background-color: #0f0f0f;
         text-align: center;
         padding: 1rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         a{
             color: #e6e6e6;
             text-decoration: none;

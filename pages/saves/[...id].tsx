@@ -55,12 +55,13 @@ export default function Saved() {
 			<nav>
 				<Link href="/">
 					<div className={Style.logo}>
-						<img src="../feedwise.svg" alt="Feedwise logo" />
+						<img src="../../feedwise.svg" alt="Feedwise logo" />
 					</div>
 				</Link>
 			</nav>
 			<div className={Style.content}>
-				{posts.length > 0 ? <AllPosts saved={posts} loading={false} columns={1} /> : <Loading/>}
+				{posts.length > 0 ? <AllPosts saved={posts} loading={false} columns={1} /> : <div className={Style.loadingContainer}><Loading /></div>
+				}
 			</div>
 		</div>
 	);

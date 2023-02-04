@@ -23,9 +23,18 @@
 
         .logo {
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             font-family: "Roboto Mono", monospace;
             font-weight: 300;
+
+            img{
+                width: 6rem;
+                height: 3rem;
+                margin-right: 2rem;
+            }
         }
     }
 

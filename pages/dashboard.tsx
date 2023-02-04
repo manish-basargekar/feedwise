@@ -413,7 +413,9 @@ export default function Callback() {
 								<path d="M5 6h14M5 12h14M5 18h14" />
 							</svg>
 						</button>
-						<h1 className={Style.logo}>FEEDWISE</h1>
+						<div className={Style.logo}>
+							<img src="../feedwise.svg" alt="Feedwise logo" />
+						</div>
 					</div>
 					<div className={Style.content} style={{
 						pointerEvents: isSidebarOpen && window.innerWidth < 769 ? "none" : "auto"

@@ -140,7 +140,7 @@ export default function Home() {
 					© 2023 Feedwise
 					</div>
 					<div className="right">
-						Made by <a href="https://twitter.com/oimanish" 
+						Made by <a href="https://mnsh.me" 
 						target="_blank" rel="noopener noreferrer"
 						>Manish</a>
 					</div>

@@ -54,7 +54,9 @@ export default function Saved() {
 		<div className={Style.container}>
 			<nav>
 				<Link href="/">
-					<h1>Feedwise</h1>
+					<div className={Style.logo}>
+						<img src="../feedwise.svg" alt="Feedwise logo" />
+					</div>
 				</Link>
 			</nav>
 			<div className={Style.content}>

@@ -1,9 +1,59 @@
+.notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    // font-size: 2rem;
+
+    background-color: #0f0f0f;
+    color: var(--ac-2);
+    cursor: pointer;
+    transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
+
+    // font-weight: 300;
+
+
+    @media screen and (max-width: 500px) {
+        height: 6rem;
+        // font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        padding:  0 3rem;
+    }
+
+    &:hover {
+        // color: #ff4500;
+        opacity: .7;
+
+    }
+
+  
+
+    .content {
+        // min-width: 900px;
+        // padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            margin-top: 0.2rem;
+
+            @media screen and (max-width: 500px) {
+                display: none;
+            }
+        }
+    }
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
+
     @media screen and (max-width: 1200px) {
         padding: 0 1rem;
     }
+
 
     .cta-login {
         @media screen and (min-width: 500px) {
@@ -19,11 +69,13 @@
         background-color: #ff4500;
         color: #000000;
     }
+
     nav {
         padding: 1rem 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         //  background-color: #0f0f0f;
         .logo {
             color: #ffffff;
@@ -120,10 +172,12 @@
             text-align: center;
             line-height: 1;
             font-weight: 900;
+
             @media screen and (max-width: 768px) {
                 font-size: 2rem;
             }
         }
+
         .desc {
             margin-top: 0rem;
         }
@@ -148,14 +202,17 @@
 
             .content {
                 flex: 1;
+
                 h3 {
                     font-size: 4rem;
                     line-height: 1;
                     font-weight: 900;
+
                     @media screen and (max-width: 768px) {
                         font-size: 3rem;
                     }
                 }
+
                 p {
                     margin-top: 1rem;
                 }
@@ -192,8 +249,8 @@
         align-items: center;
         color: #a2a1a1;
 
-        a{
-            color:#ff4500;
+        a {
+            color: #ff4500;
         }
     }
 }
